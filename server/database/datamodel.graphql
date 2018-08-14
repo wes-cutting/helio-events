@@ -1,3 +1,63 @@
+enum EventKind {
+  HOLIDAY
+  SHOWCASE
+  OPENHOUSE
+  MEETUP
+  VACATION
+  WORKSHOP
+}
+
+enum CourseKind {
+  IMMERSIVE
+  PART_ONE
+  PART_TWO
+  UNITY
+  UI_UX
+  QA
+}
+
+enum Location {
+  SLC
+  DRAPER
+}
+
+enum Day {
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+  FRIDAY
+  SATURDAY
+}
+
+type Event {
+  id: ID! @unique
+  name: String!
+  desc: String
+  eventKind: EventKind!
+  date: DateTime!
+}
+
+type Course {
+  id: ID! @unique
+  name: String!
+  courseKind: CourseKind!
+  campus: Location!
+  start: DateTime!
+  end: DateTime!
+  days: [Day!]!
+  events: [Event!]!
+}
+
+type DateTime {
+  id: ID! @unique
+  year: Int!
+  month: Int!
+  day: Int!
+  hour: Int
+  minute: Int
+}
+
 type Post {
   id: ID! @unique
   createdAt: DateTime!
@@ -15,3 +75,6 @@ type User {
   name: String!
   posts: [Post!]!
 }
+
+
+
