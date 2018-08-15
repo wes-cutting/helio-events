@@ -1,8 +1,10 @@
 enum EventKind {
+  GRADUATION
   HOLIDAY
-  SHOWCASE
-  OPENHOUSE
   MEETUP
+  OPENHOUSE
+  ORIENTATION
+  SHOWCASE
   VACATION
   WORKSHOP
 }
@@ -11,14 +13,14 @@ enum CourseKind {
   IMMERSIVE
   PART_ONE
   PART_TWO
-  UNITY
-  UI_UX
   QA
+  UI_UX
+  UNITY
 }
 
 enum Location {
-  SLC
   DRAPER
+  SLC
 }
 
 enum Day {
@@ -38,14 +40,21 @@ type Event {
   date: DateTime!
 }
 
-type Course {
+type CourseTemplate {
   id: ID! @unique
-  name: String!
+  name: String! @unique
   courseKind: CourseKind!
   campus: Location!
-  start: DateTime!
-  end: DateTime!
   days: [Day!]!
+  hours: Int!
+}
+
+type Course {
+  id: ID! @unique
+  template: CourseTemplate!
+  name: String! @unique
+  start: DateTime!
+  end: DateTime
   events: [Event!]!
 }
 
