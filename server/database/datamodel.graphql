@@ -58,15 +58,6 @@ type Course {
   events: [Event!]!
 }
 
-type DateTime {
-  id: ID! @unique
-  year: Int!
-  month: Int!
-  day: Int!
-  hour: Int
-  minute: Int
-}
-
 type Post {
   id: ID! @unique
   createdAt: DateTime!
