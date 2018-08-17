@@ -1,9 +1,19 @@
 # import Post from "./generated/prisma.graphql"
+# import Event from "./generated/prisma.graphql"
+# import CourseTemplate from "./generated/prisma.graphql"
+# import Course from "./generated/prisma.graphql"
+# import User from "./generated/prisma.graphql"
 
 type Query {
   feed: [Post!]!
   drafts: [Post!]!
   post(id: ID!): Post
+  event(id: ID!): Event
+  courseTemplate(id: ID!): CourseTemplate
+  course(id: ID!): Course
+  events: [Event!]!
+  courseTemplates: [CourseTemplate!]!
+  courses: [Course!]!
   me: User
 }
 
@@ -13,6 +23,18 @@ type Mutation {
   createDraft(title: String!, text: String!): Post!
   publish(id: ID!): Post!
   deletePost(id: ID!): Post!
+  ### Event
+  createEvent(name: String!, desc: String, eventKing: EventKind!, date: DateTime!): Event!
+  updateEvent(name: String!, desc: String, eventKind: EventKind!, date: DateTime!): Event!
+  deleteEvent(id: ID!): Event!
+  ### CourseTemplate
+  createCourseTemplate(name: String!, courseKind: CourseKind!, campus: Location!, days: [Day!], hours: Int!): CourseTemplate!
+  updateCourseTemplate(name: String!, courseKind: CourseKind!, campus: Location!, days: [Day!], hours: Int!): CourseTemplate!
+  deleteCourseTemplate(id: ID!): CourseTemplate!
+  ### Course
+  createCourse(template: CourseTemplate!, name: String!, start: DateTime!): Course!
+  updateCourse(template: CourseTemplate!, name: String!, start: DateTime!, start: DateTime!, events: [Event!]!, isFinished: Boolean!): Course!
+  deleteCourse(id: ID!): Course!
 }
 
 type Subscription {

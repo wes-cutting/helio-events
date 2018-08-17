@@ -1,5 +1,17 @@
-# source: https://us1.prisma.sh/public-obsidianstealer-258/gql-p-boilerplate/dev
-# timestamp: Fri Jul 27 2018 00:42:17 GMT-0600 (Mountain Daylight Time)
+# source: https://us1.prisma.sh/corey-bernsdorff/helio-events/dev
+# timestamp: Fri Aug 17 2018 11:12:06 GMT-0600 (MDT)
+
+type AggregateCourse {
+  count: Int!
+}
+
+type AggregateCourseTemplate {
+  count: Int!
+}
+
+type AggregateEvent {
+  count: Int!
+}
 
 type AggregatePost {
   count: Int!
@@ -14,7 +26,885 @@ type BatchPayload {
   count: Long!
 }
 
+type Course implements Node {
+  id: ID!
+  template(where: CourseTemplateWhereInput): CourseTemplate!
+  name: String!
+  start: DateTime!
+  end: DateTime
+  events(where: EventWhereInput, orderBy: EventOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Event!]
+  isFinished: Boolean!
+}
+
+"""A connection to a list of items."""
+type CourseConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [CourseEdge]!
+  aggregate: AggregateCourse!
+}
+
+input CourseCreateInput {
+  name: String!
+  start: DateTime!
+  end: DateTime
+  isFinished: Boolean
+  template: CourseTemplateCreateOneInput!
+  events: EventCreateManyInput
+}
+
+"""An edge in a connection."""
+type CourseEdge {
+  """The item at the end of the edge."""
+  node: Course!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum CourseKind {
+  IMMERSIVE
+  PART_ONE
+  PART_TWO
+  QA
+  UI_UX
+  UNITY
+}
+
+enum CourseOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  start_ASC
+  start_DESC
+  end_ASC
+  end_DESC
+  isFinished_ASC
+  isFinished_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type CoursePreviousValues {
+  id: ID!
+  name: String!
+  start: DateTime!
+  end: DateTime
+  isFinished: Boolean!
+}
+
+type CourseSubscriptionPayload {
+  mutation: MutationType!
+  node: Course
+  updatedFields: [String!]
+  previousValues: CoursePreviousValues
+}
+
+input CourseSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [CourseSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [CourseSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [CourseSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: CourseWhereInput
+}
+
+type CourseTemplate implements Node {
+  id: ID!
+  name: String!
+  courseKind: CourseKind!
+  campus: Location!
+  days: [Day!]!
+  hours: Int!
+}
+
+"""A connection to a list of items."""
+type CourseTemplateConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [CourseTemplateEdge]!
+  aggregate: AggregateCourseTemplate!
+}
+
+input CourseTemplateCreatedaysInput {
+  set: [Day!]
+}
+
+input CourseTemplateCreateInput {
+  name: String!
+  courseKind: CourseKind!
+  campus: Location!
+  hours: Int!
+  days: CourseTemplateCreatedaysInput
+}
+
+input CourseTemplateCreateOneInput {
+  create: CourseTemplateCreateInput
+  connect: CourseTemplateWhereUniqueInput
+}
+
+"""An edge in a connection."""
+type CourseTemplateEdge {
+  """The item at the end of the edge."""
+  node: CourseTemplate!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum CourseTemplateOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  courseKind_ASC
+  courseKind_DESC
+  campus_ASC
+  campus_DESC
+  hours_ASC
+  hours_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type CourseTemplatePreviousValues {
+  id: ID!
+  name: String!
+  courseKind: CourseKind!
+  campus: Location!
+  days: [Day!]!
+  hours: Int!
+}
+
+type CourseTemplateSubscriptionPayload {
+  mutation: MutationType!
+  node: CourseTemplate
+  updatedFields: [String!]
+  previousValues: CourseTemplatePreviousValues
+}
+
+input CourseTemplateSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [CourseTemplateSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [CourseTemplateSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [CourseTemplateSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: CourseTemplateWhereInput
+}
+
+input CourseTemplateUpdateDataInput {
+  name: String
+  courseKind: CourseKind
+  campus: Location
+  hours: Int
+  days: CourseTemplateUpdatedaysInput
+}
+
+input CourseTemplateUpdatedaysInput {
+  set: [Day!]
+}
+
+input CourseTemplateUpdateInput {
+  name: String
+  courseKind: CourseKind
+  campus: Location
+  hours: Int
+  days: CourseTemplateUpdatedaysInput
+}
+
+input CourseTemplateUpdateOneInput {
+  create: CourseTemplateCreateInput
+  connect: CourseTemplateWhereUniqueInput
+  delete: Boolean
+  update: CourseTemplateUpdateDataInput
+  upsert: CourseTemplateUpsertNestedInput
+}
+
+input CourseTemplateUpsertNestedInput {
+  update: CourseTemplateUpdateDataInput!
+  create: CourseTemplateCreateInput!
+}
+
+input CourseTemplateWhereInput {
+  """Logical AND on all given filters."""
+  AND: [CourseTemplateWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [CourseTemplateWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [CourseTemplateWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  courseKind: CourseKind
+
+  """All values that are not equal to given value."""
+  courseKind_not: CourseKind
+
+  """All values that are contained in given list."""
+  courseKind_in: [CourseKind!]
+
+  """All values that are not contained in given list."""
+  courseKind_not_in: [CourseKind!]
+  campus: Location
+
+  """All values that are not equal to given value."""
+  campus_not: Location
+
+  """All values that are contained in given list."""
+  campus_in: [Location!]
+
+  """All values that are not contained in given list."""
+  campus_not_in: [Location!]
+  hours: Int
+
+  """All values that are not equal to given value."""
+  hours_not: Int
+
+  """All values that are contained in given list."""
+  hours_in: [Int!]
+
+  """All values that are not contained in given list."""
+  hours_not_in: [Int!]
+
+  """All values less than the given value."""
+  hours_lt: Int
+
+  """All values less than or equal the given value."""
+  hours_lte: Int
+
+  """All values greater than the given value."""
+  hours_gt: Int
+
+  """All values greater than or equal the given value."""
+  hours_gte: Int
+}
+
+input CourseTemplateWhereUniqueInput {
+  id: ID
+  name: String
+}
+
+input CourseUpdateInput {
+  name: String
+  start: DateTime
+  end: DateTime
+  isFinished: Boolean
+  template: CourseTemplateUpdateOneInput
+  events: EventUpdateManyInput
+}
+
+input CourseWhereInput {
+  """Logical AND on all given filters."""
+  AND: [CourseWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [CourseWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [CourseWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  start: DateTime
+
+  """All values that are not equal to given value."""
+  start_not: DateTime
+
+  """All values that are contained in given list."""
+  start_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  start_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  start_lt: DateTime
+
+  """All values less than or equal the given value."""
+  start_lte: DateTime
+
+  """All values greater than the given value."""
+  start_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  start_gte: DateTime
+  end: DateTime
+
+  """All values that are not equal to given value."""
+  end_not: DateTime
+
+  """All values that are contained in given list."""
+  end_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  end_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  end_lt: DateTime
+
+  """All values less than or equal the given value."""
+  end_lte: DateTime
+
+  """All values greater than the given value."""
+  end_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  end_gte: DateTime
+  isFinished: Boolean
+
+  """All values that are not equal to given value."""
+  isFinished_not: Boolean
+  template: CourseTemplateWhereInput
+  events_every: EventWhereInput
+  events_some: EventWhereInput
+  events_none: EventWhereInput
+}
+
+input CourseWhereUniqueInput {
+  id: ID
+  name: String
+}
+
 scalar DateTime
+
+enum Day {
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+  FRIDAY
+  SATURDAY
+}
+
+type Event implements Node {
+  id: ID!
+  name: String!
+  desc: String
+  eventKind: EventKind!
+  date: DateTime!
+}
+
+"""A connection to a list of items."""
+type EventConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [EventEdge]!
+  aggregate: AggregateEvent!
+}
+
+input EventCreateInput {
+  name: String!
+  desc: String
+  eventKind: EventKind!
+  date: DateTime!
+}
+
+input EventCreateManyInput {
+  create: [EventCreateInput!]
+  connect: [EventWhereUniqueInput!]
+}
+
+"""An edge in a connection."""
+type EventEdge {
+  """The item at the end of the edge."""
+  node: Event!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum EventKind {
+  GRADUATION
+  HOLIDAY
+  MEETUP
+  OPENHOUSE
+  ORIENTATION
+  SHOWCASE
+  VACATION
+  WORKSHOP
+}
+
+enum EventOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  desc_ASC
+  desc_DESC
+  eventKind_ASC
+  eventKind_DESC
+  date_ASC
+  date_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type EventPreviousValues {
+  id: ID!
+  name: String!
+  desc: String
+  eventKind: EventKind!
+  date: DateTime!
+}
+
+type EventSubscriptionPayload {
+  mutation: MutationType!
+  node: Event
+  updatedFields: [String!]
+  previousValues: EventPreviousValues
+}
+
+input EventSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [EventSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [EventSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [EventSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: EventWhereInput
+}
+
+input EventUpdateDataInput {
+  name: String
+  desc: String
+  eventKind: EventKind
+  date: DateTime
+}
+
+input EventUpdateInput {
+  name: String
+  desc: String
+  eventKind: EventKind
+  date: DateTime
+}
+
+input EventUpdateManyInput {
+  create: [EventCreateInput!]
+  connect: [EventWhereUniqueInput!]
+  disconnect: [EventWhereUniqueInput!]
+  delete: [EventWhereUniqueInput!]
+  update: [EventUpdateWithWhereUniqueNestedInput!]
+  upsert: [EventUpsertWithWhereUniqueNestedInput!]
+}
+
+input EventUpdateWithWhereUniqueNestedInput {
+  where: EventWhereUniqueInput!
+  data: EventUpdateDataInput!
+}
+
+input EventUpsertWithWhereUniqueNestedInput {
+  where: EventWhereUniqueInput!
+  update: EventUpdateDataInput!
+  create: EventCreateInput!
+}
+
+input EventWhereInput {
+  """Logical AND on all given filters."""
+  AND: [EventWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [EventWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [EventWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  desc: String
+
+  """All values that are not equal to given value."""
+  desc_not: String
+
+  """All values that are contained in given list."""
+  desc_in: [String!]
+
+  """All values that are not contained in given list."""
+  desc_not_in: [String!]
+
+  """All values less than the given value."""
+  desc_lt: String
+
+  """All values less than or equal the given value."""
+  desc_lte: String
+
+  """All values greater than the given value."""
+  desc_gt: String
+
+  """All values greater than or equal the given value."""
+  desc_gte: String
+
+  """All values containing the given string."""
+  desc_contains: String
+
+  """All values not containing the given string."""
+  desc_not_contains: String
+
+  """All values starting with the given string."""
+  desc_starts_with: String
+
+  """All values not starting with the given string."""
+  desc_not_starts_with: String
+
+  """All values ending with the given string."""
+  desc_ends_with: String
+
+  """All values not ending with the given string."""
+  desc_not_ends_with: String
+  eventKind: EventKind
+
+  """All values that are not equal to given value."""
+  eventKind_not: EventKind
+
+  """All values that are contained in given list."""
+  eventKind_in: [EventKind!]
+
+  """All values that are not contained in given list."""
+  eventKind_not_in: [EventKind!]
+  date: DateTime
+
+  """All values that are not equal to given value."""
+  date_not: DateTime
+
+  """All values that are contained in given list."""
+  date_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  date_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  date_lt: DateTime
+
+  """All values less than or equal the given value."""
+  date_lte: DateTime
+
+  """All values greater than the given value."""
+  date_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  date_gte: DateTime
+}
+
+input EventWhereUniqueInput {
+  id: ID
+}
+
+enum Location {
+  DRAPER
+  SLC
+}
 
 """
 The `Long` scalar type represents non-fractional signed whole numeric values.
@@ -23,18 +913,36 @@ Long can represent values between -(2^63) and 2^63 - 1.
 scalar Long
 
 type Mutation {
+  createCourse(data: CourseCreateInput!): Course!
   createPost(data: PostCreateInput!): Post!
   createUser(data: UserCreateInput!): User!
+  createCourseTemplate(data: CourseTemplateCreateInput!): CourseTemplate!
+  createEvent(data: EventCreateInput!): Event!
+  updateCourse(data: CourseUpdateInput!, where: CourseWhereUniqueInput!): Course
   updatePost(data: PostUpdateInput!, where: PostWhereUniqueInput!): Post
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+  updateCourseTemplate(data: CourseTemplateUpdateInput!, where: CourseTemplateWhereUniqueInput!): CourseTemplate
+  updateEvent(data: EventUpdateInput!, where: EventWhereUniqueInput!): Event
+  deleteCourse(where: CourseWhereUniqueInput!): Course
   deletePost(where: PostWhereUniqueInput!): Post
   deleteUser(where: UserWhereUniqueInput!): User
+  deleteCourseTemplate(where: CourseTemplateWhereUniqueInput!): CourseTemplate
+  deleteEvent(where: EventWhereUniqueInput!): Event
+  upsertCourse(where: CourseWhereUniqueInput!, create: CourseCreateInput!, update: CourseUpdateInput!): Course!
   upsertPost(where: PostWhereUniqueInput!, create: PostCreateInput!, update: PostUpdateInput!): Post!
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
+  upsertCourseTemplate(where: CourseTemplateWhereUniqueInput!, create: CourseTemplateCreateInput!, update: CourseTemplateUpdateInput!): CourseTemplate!
+  upsertEvent(where: EventWhereUniqueInput!, create: EventCreateInput!, update: EventUpdateInput!): Event!
+  updateManyCourses(data: CourseUpdateInput!, where: CourseWhereInput): BatchPayload!
   updateManyPosts(data: PostUpdateInput!, where: PostWhereInput): BatchPayload!
   updateManyUsers(data: UserUpdateInput!, where: UserWhereInput): BatchPayload!
+  updateManyCourseTemplates(data: CourseTemplateUpdateInput!, where: CourseTemplateWhereInput): BatchPayload!
+  updateManyEvents(data: EventUpdateInput!, where: EventWhereInput): BatchPayload!
+  deleteManyCourses(where: CourseWhereInput): BatchPayload!
   deleteManyPosts(where: PostWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
+  deleteManyCourseTemplates(where: CourseTemplateWhereInput): BatchPayload!
+  deleteManyEvents(where: EventWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -392,12 +1300,21 @@ input PostWhereUniqueInput {
 }
 
 type Query {
+  courses(where: CourseWhereInput, orderBy: CourseOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Course]!
   posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post]!
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
+  courseTemplates(where: CourseTemplateWhereInput, orderBy: CourseTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CourseTemplate]!
+  events(where: EventWhereInput, orderBy: EventOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Event]!
+  course(where: CourseWhereUniqueInput!): Course
   post(where: PostWhereUniqueInput!): Post
   user(where: UserWhereUniqueInput!): User
+  courseTemplate(where: CourseTemplateWhereUniqueInput!): CourseTemplate
+  event(where: EventWhereUniqueInput!): Event
+  coursesConnection(where: CourseWhereInput, orderBy: CourseOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CourseConnection!
   postsConnection(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PostConnection!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
+  courseTemplatesConnection(where: CourseTemplateWhereInput, orderBy: CourseTemplateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CourseTemplateConnection!
+  eventsConnection(where: EventWhereInput, orderBy: EventOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): EventConnection!
 
   """Fetches an object given its ID"""
   node(
@@ -407,8 +1324,11 @@ type Query {
 }
 
 type Subscription {
+  course(where: CourseSubscriptionWhereInput): CourseSubscriptionPayload
   post(where: PostSubscriptionWhereInput): PostSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
+  courseTemplate(where: CourseTemplateSubscriptionWhereInput): CourseTemplateSubscriptionPayload
+  event(where: EventSubscriptionWhereInput): EventSubscriptionPayload
 }
 
 type User implements Node {
