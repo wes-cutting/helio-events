@@ -42,7 +42,7 @@ type Event {
 
 type CourseTemplate {
   id: ID! @unique
-  name: String! @unique
+  name: String!
   courseKind: CourseKind!
   campus: Location!
   days: [Day!]!
