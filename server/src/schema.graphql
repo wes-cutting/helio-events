@@ -25,15 +25,15 @@ type Mutation {
   deletePost(id: ID!): Post!
   ### Event
   createEvent(name: String!, desc: String, eventKing: EventKind!, date: DateTime!): Event!
-  updateEvent(name: String!, desc: String, eventKind: EventKind!, date: DateTime!): Event!
+  updateEvent(id: ID!, name: String!, desc: String, eventKind: EventKind!, date: DateTime!): Event!
   deleteEvent(id: ID!): Event!
   ### CourseTemplate
   createCourseTemplate(name: String!, courseKind: CourseKind!, campus: Location!, days: [Day!], hours: Int!): CourseTemplate!
-  updateCourseTemplate(name: String!, courseKind: CourseKind!, campus: Location!, days: [Day!], hours: Int!): CourseTemplate!
+  updateCourseTemplate(id: ID!, name: String!, courseKind: CourseKind!, campus: Location!, days: [Day!], hours: Int!): CourseTemplate!
   deleteCourseTemplate(id: ID!): CourseTemplate!
   ### Course
   createCourse(template: ID!, name: String!, start: DateTime!): Course!
-  updateCourse(template: ID!, name: String!, start: DateTime!, start: DateTime!, events: [ID!]!, isFinished: Boolean!): Course!
+  updateCourse(id: ID!, template: ID!, name: String!, start: DateTime!, start: DateTime!, events: [ID!]!, isFinished: Boolean!): Course!
   deleteCourse(id: ID!): Course!
 }
 

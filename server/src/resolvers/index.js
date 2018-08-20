@@ -6,7 +6,7 @@ const { auth } = require('./Mutation/auth')
 const { post } = require('./Mutation/post')
 const { calendar } = require('./Query/calendar')
 const { events } = require('./Mutation/events')
-const { courseTemplates } = require('./Mutation/coursesTemplate')
+const { courseTemplates } = require('./Mutation/courseTemplates')
 const { courses } = require('./Mutation/courses')
 
 module.exports = {
