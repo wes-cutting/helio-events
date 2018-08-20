@@ -24,7 +24,7 @@ type Mutation {
   publish(id: ID!): Post!
   deletePost(id: ID!): Post!
   ### Event
-  createEvent(name: String!, desc: String, eventKing: EventKind!, date: DateTime!): Event!
+  createEvent(name: String!, desc: String, eventKind: EventKind!, date: DateTime!): Event!
   updateEvent(id: ID!, name: String!, desc: String, eventKind: EventKind!, date: DateTime!): Event!
   deleteEvent(id: ID!): Event!
   ### CourseTemplate

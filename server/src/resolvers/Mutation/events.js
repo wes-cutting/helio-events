@@ -15,8 +15,43 @@ const events = {
                 },
             },
             info
-        )
+        );
     },
-}
+
+    async updateEvent(parent, { id, name, desc, eventKind, date }, ctx, info) {
+        const eventExists = await ctx.db.exists.Event({
+            id,
+        })
+
+        if (!eventExists) {
+            throw new Error(`Event not found`)
+        }
+
+        return ctx.db.mutation.updateEvent(
+            {
+                where: { id },
+                data: {
+                    name,
+                    desc,
+                    eventKind,
+                    date
+                },
+            },
+            info,
+        );
+    },
+
+    async deleteEvent(parent, { id }, ctx) {
+        const eventExists = await ctx.db.exists.Event({
+            id,
+        })
+
+        if (!eventExists) {
+            throw new Error(`Event not found`)
+        }
+
+        return ctx.db.mutation.deleteEvent({ where: { id } })
+    },
+};
 
 module.exports = { events }
