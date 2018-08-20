@@ -2,7 +2,6 @@
 # import Event from "./generated/prisma.graphql"
 # import CourseTemplate from "./generated/prisma.graphql"
 # import Course from "./generated/prisma.graphql"
-# import User from "./generated/prisma.graphql"
 
 type Query {
   feed: [Post!]!
@@ -32,8 +31,8 @@ type Mutation {
   updateCourseTemplate(name: String!, courseKind: CourseKind!, campus: Location!, days: [Day!], hours: Int!): CourseTemplate!
   deleteCourseTemplate(id: ID!): CourseTemplate!
   ### Course
-  createCourse(template: CourseTemplate!, name: String!, start: DateTime!): Course!
-  updateCourse(template: CourseTemplate!, name: String!, start: DateTime!, start: DateTime!, events: [Event!]!, isFinished: Boolean!): Course!
+  createCourse(template: ID!, name: String!, start: DateTime!): Course!
+  updateCourse(template: ID!, name: String!, start: DateTime!, start: DateTime!, events: [ID!]!, isFinished: Boolean!): Course!
   deleteCourse(id: ID!): Course!
 }
 
