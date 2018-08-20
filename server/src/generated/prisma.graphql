@@ -1,5 +1,5 @@
 # source: https://us1.prisma.sh/corey-bernsdorff/helio-events/dev
-# timestamp: Fri Aug 17 2018 11:12:06 GMT-0600 (MDT)
+# timestamp: Mon Aug 20 2018 10:40:20 GMT-0600 (MDT)
 
 type AggregateCourse {
   count: Int!
@@ -415,7 +415,6 @@ input CourseTemplateWhereInput {
 
 input CourseTemplateWhereUniqueInput {
   id: ID
-  name: String
 }
 
 input CourseUpdateInput {
@@ -904,6 +903,7 @@ input EventWhereUniqueInput {
 enum Location {
   DRAPER
   SLC
+  ONLINE
 }
 
 """

@@ -21,6 +21,7 @@ enum CourseKind {
 enum Location {
   DRAPER
   SLC
+  ONLINE
 }
 
 enum Day {
