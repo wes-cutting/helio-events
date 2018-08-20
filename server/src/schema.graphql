@@ -11,6 +11,7 @@ type Query {
   courseTemplate(id: ID!): CourseTemplate
   course(id: ID!): Course
   events: [Event!]!
+  eventByKind(eventKind: EventKind!): [Event!]!
   courseTemplates: [CourseTemplate!]!
   courses: [Course!]!
   me: User
