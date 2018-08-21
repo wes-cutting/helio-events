@@ -15,6 +15,7 @@ module.exports = {
     ...user,
     ...calendar,
   },
+ 
   Mutation: {
     ...auth,
     ...post,

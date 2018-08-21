@@ -9,20 +9,20 @@ const { getUserId } = require('../../utils')
 
 const calendar = {
    // list of EVENTS nav'd from Main Menu
-   events(parent, { id, name, desc, date }, ctx, info) {
-      return ctx.db.query.events({ where: { id } }, info)
+   events(parent, args, ctx, info) {
+      return ctx.db.query.events( { }, info )
    },
    // list of TEMPLATES nav'd from main menu
-   courseTemplates(parent, { id, name, courseKind, campus, days, hours }, ctx, info) {
-      return ctx.db.query.courseTemplates({ where: { id } }, info)
+   courseTemplates(parent, args, ctx, info) {
+      return ctx.db.query.courseTemplates( { }, info )
    },
    // list of COURSES nav'd from main menu
-   courses(parent, { id }, ctx, info) {
-      return ctx.db.query.courses({ where: { id } }, info)
+   courses(parent, args, ctx, info) {
+      return ctx.db.query.courses( { }, info )
    },
    
    eventByKind(parent, { eventKind }, ctx, info) {
-      return ctx.db.query.eventByKind({ where: { EventKind: eventKind } }, info)
+      return ctx.db.query.events({ where: { eventKind } }, info)
    },
    
    course(parent, { id }, ctx, info) {
