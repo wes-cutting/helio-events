@@ -20,6 +20,9 @@ import { isTokenExpired } from '../helper/jwtHelper'
 import { graphql } from 'react-apollo'
 import  { gql } from 'apollo-boost'
 
+import GlobalEvent from './events/GlobalEvent'
+import CourseEvent from './events/CourseEvent'
+
 const ProtectedRoute = ({ component: Component, token, ...rest }) => {
   return token ? (
     <Route {...rest} render={matchProps => <Component {...matchProps} />} />
@@ -136,6 +139,28 @@ class RootContainer extends Component {
           </Link>
         )}
         {this.props.data &&
+        // this.props.data.me &&
+        // this.props.data.me.email &&
+        this.state.token && (
+          <Link
+            to="/drafts"
+            className="f6 link dim br1 ba ph3 pv2 fr mb2 dib black"
+          >
+            + Create Global Event
+          </Link>
+        )}
+        {this.props.data &&
+        // this.props.data.me &&
+        // this.props.data.me.email &&
+        this.state.token && (
+          <Link
+            to="/drafts"
+            className="f6 link dim br1 ba ph3 pv2 fr mb2 dib black"
+          >
+            + Create Course Event
+          </Link>
+        )}
+        {this.props.data &&
           // this.props.data.me &&
           // this.props.data.me.email &&
           this.state.token && (
@@ -155,6 +180,16 @@ class RootContainer extends Component {
       <div className="fl w-100 pl4 pr4">
         <Switch>
           <Route exact path="/" component={FeedPage} />
+          <ProtectedRoute
+            token={this.state.token}
+            path="/globalEvent"
+            component={GlobalEvent}
+          />
+          <ProtectedRoute
+            token={this.state.token}
+            path="/courseEvent"
+            component={CourseEvent}
+          />
           <ProtectedRoute
             token={this.state.token}
             path="/drafts"

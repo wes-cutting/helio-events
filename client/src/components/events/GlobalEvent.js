@@ -1,16 +1,15 @@
-// Adding events to courses while in the course settings page
-// Events:
-//   - Orientation
-//   - Vacations
-//   - Workshops
-//   - Graduation
+// Create a Global Event:
+//   - Holidays
+//   - Meetups
+//   - Showcases
+//   - OpenHouse
 
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import { graphql } from 'react-apollo'
 import  { gql } from 'apollo-boost'
 
-class CourseEvent extends Component {
+class GlobalEvent extends Component {
   state = {
     name: '',
     desc: '',
@@ -22,7 +21,7 @@ class CourseEvent extends Component {
     return (
       <div className="pa4 flex justify-center bg-white">
         <form onSubmit={this.handlePost}>
-          <h1>Create Course Event</h1>
+          <h1>Create Global Event</h1>
           <input
             autoFocus
             className="w-100 pa2 mv2 br2 b--black-20 bw1"
@@ -38,10 +37,10 @@ class CourseEvent extends Component {
             placeholder="Type"
             value={this.state.eventKind}
           >
-            <option value="GRADUATION">GRADUATION</option>
-            <option value="ORIENTATION">ORIENATION</option>
-            <option value="VACATION">VACATION</option>
-            <option value="WORKSHOP">WORKSHOP</option>
+            <option value="HOLIDAY">HOLIDAY</option>
+            <option value="MEETUP">MEETUP</option>
+            <option value="OPENHOUSE">OPENHOUSE</option>
+            <option value="SHOWCASE">SHOWCASE</option>
           </select>
           <input
             autoFocus
@@ -99,6 +98,6 @@ const CREATE_EVENT_MUTATION = gql`
 
 const CreateEventWithMutation = graphql(CREATE_EVENT_MUTATION, {
   name: 'createEventMutation', // name of the injected prop: this.props.createDraftMutation...
-})(CourseEvent)
+})(GlobalEvent)
 
 export default withRouter(CreateEventWithMutation)
