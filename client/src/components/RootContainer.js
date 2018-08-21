@@ -101,8 +101,8 @@ class RootContainer extends Component {
           Feed
         </NavLink>
         {this.props.data &&
-          this.props.data.me &&
-          this.props.data.me.email &&
+          // this.props.data.me &&
+          // this.props.data.me.email &&
           this.state.token && (
             <NavLink
               className="link dim f6 f5-ns dib mr3 black"
@@ -136,8 +136,8 @@ class RootContainer extends Component {
           </Link>
         )}
         {this.props.data &&
-          this.props.data.me &&
-          this.props.data.me.email &&
+          // this.props.data.me &&
+          // this.props.data.me.email &&
           this.state.token && (
             <Link
               to="/create"
