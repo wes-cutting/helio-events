@@ -22,6 +22,8 @@ import  { gql } from 'apollo-boost'
 
 import GlobalEvent from './events/GlobalEvent'
 import CourseEvent from './events/CourseEvent'
+import EventList from './events/EventList'
+import SingleEvent from './events/SingleEvent'
 
 const ProtectedRoute = ({ component: Component, token, ...rest }) => {
   return token ? (
@@ -117,6 +119,20 @@ class RootContainer extends Component {
               Drafts
             </NavLink>
           )}
+        {this.props.data &&
+        // this.props.data.me &&
+        // this.props.data.me.email &&
+        this.state.token && (
+          <NavLink
+            className="link dim f6 f5-ns dib mr3 black"
+            activeClassName="gray"
+            exact={true}
+            to="/events"
+            title="Events"
+          >
+           Events
+          </NavLink>
+        )}
         {this.state.token ? (
           <div
             onClick={() => {
@@ -143,7 +159,7 @@ class RootContainer extends Component {
         // this.props.data.me.email &&
         this.state.token && (
           <Link
-            to="/drafts"
+            to="/globalEvent"
             className="f6 link dim br1 ba ph3 pv2 fr mb2 dib black"
           >
             + Create Global Event
@@ -154,7 +170,7 @@ class RootContainer extends Component {
         // this.props.data.me.email &&
         this.state.token && (
           <Link
-            to="/drafts"
+            to="/courseEvent"
             className="f6 link dim br1 ba ph3 pv2 fr mb2 dib black"
           >
             + Create Course Event
@@ -192,6 +208,11 @@ class RootContainer extends Component {
           />
           <ProtectedRoute
             token={this.state.token}
+            path="/events"
+            component={EventList}
+          />
+          <ProtectedRoute
+            token={this.state.token}
             path="/drafts"
             component={DraftsPage}
           />
@@ -201,6 +222,7 @@ class RootContainer extends Component {
             component={CreatePage}
           />
           <Route path="/post/:id" component={DetailPage} />
+          <Route path="/event/:id" component={SingleEvent} />
           <Route
             token={this.state.token}
             path="/login"

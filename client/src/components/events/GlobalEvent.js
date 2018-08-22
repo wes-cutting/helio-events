@@ -80,7 +80,7 @@ class GlobalEvent extends Component {
     await this.props.createEventMutation({
       variables: { name, eventKind, date, desc },
     })
-    this.props.history.replace('/drafts')
+    this.props.history.replace('/events')
   }
 }
 
