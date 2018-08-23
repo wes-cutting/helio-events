@@ -7,6 +7,10 @@ body {
   background: rgba(0, 0, 0, 0.05);
 }
 
+.CT {
+  text-align: center;
+}
+
 html {
   box-sizing: border-box;
 }

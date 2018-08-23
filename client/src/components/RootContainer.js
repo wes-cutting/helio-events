@@ -9,8 +9,10 @@ import {
 } from 'react-router-dom'
 import FeedPage from './posts/FeedPage'
 import DraftsPage from './posts/DraftsPage'
-import CreatePage from './posts/CreatePage'
-import DetailPage from './posts/DetailPage'
+// import CreatePage from './posts/CreatePage'
+import CreateTemplate from './templates/CreateTemplate'
+// import DetailPage from './posts/DetailPage'
+import SingleTemplate from './templates/SingleTemplate'
 import LoginPage from './users/LoginPage'
 import SignupPage from './users/SignupPage'
 import PageNotFound from './PageNotFound'
@@ -184,7 +186,7 @@ class RootContainer extends Component {
               to="/create"
               className="f6 link dim br1 ba ph3 pv2 fr mb2 dib black"
             >
-              + Create Draft
+              Create a Template
             </Link>
           )}
       </nav>
@@ -219,10 +221,14 @@ class RootContainer extends Component {
           <ProtectedRoute
             token={this.state.token}
             path="/create"
-            component={CreatePage}
+            component={CreateTemplate}
           />
+<<<<<<< Updated upstream
           <Route path="/post/:id" component={DetailPage} />
           <Route path="/event/:id" component={SingleEvent} />
+=======
+          <Route path="/post/:id" component={SingleTemplate} />
+>>>>>>> Stashed changes
           <Route
             token={this.state.token}
             path="/login"

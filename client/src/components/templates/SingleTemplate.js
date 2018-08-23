@@ -1,4 +1,5 @@
-// Update a template with Name, Kind, Campus, Days, Hours
+// View complete Template
+// Update and Delete buttons
 
 import React, { Component, Fragment } from 'react'
 import { graphql, compose } from 'react-apollo'
@@ -36,7 +37,7 @@ class DetailPage extends Component {
             className="f6 dim br1 ba ph3 pv2 mb2 dib black pointer"
             onClick={() => this.publishDraft(id)}
           >
-            Publish
+            Update
           </a>{' '}
           <a
             className="f6 dim br1 ba ph3 pv2 mb2 dib black pointer"
