@@ -3,6 +3,8 @@ import { graphql, compose } from 'react-apollo'
 import { withRouter } from 'react-router-dom'
 import  { gql } from 'apollo-boost'
 
+// import UpdateEvent from './UpdateEvent'
+
 class SingleEvent extends Component {
   render() {
     if (this.props.eventQuery.loading) {
@@ -28,13 +30,13 @@ class SingleEvent extends Component {
     )
   }
 
-  _renderAction = ({ id, isPublished }) => {
-    if (!isPublished) {
+  _renderAction = ({ id, name, eventKind, date, desc }) => {
+    if (arguments) {
       return (
         <Fragment>
           <a
             className="f6 dim br1 ba ph3 pv2 mb2 dib black pointer"
-            onClick={() => this.updateEvent(id)}
+            onClick={() => this.updateEvent(id, name, eventKind, date, desc)}
           >
             Update
           </a>{' '}
@@ -61,14 +63,14 @@ class SingleEvent extends Component {
     await this.props.deleteEvent({
       variables: { id },
     })
-    this.props.history.replace('/')
+    this.props.history.replace('/events')
   }
 
-  updateEvent = async id => {
+  updateEvent = async ( id, name, eventKind, date, desc ) => {
     await this.props.updateEvent({
-      variables: { id },
+      variables: { id, name, eventKind, date, desc },
     })
-    this.props.history.replace('/')
+    this.props.history.replace('/updateEvent')
   }
 }
 
@@ -80,28 +82,23 @@ const EVENT_QUERY = gql`
       eventKind
       date
       desc
-      isPublished
-      author {
-        name
-      }
     }
   }
 `
 
-const UPDATE_EVENT = gql`
-  mutation update($id: ID!) {
-    updateEvent(id: $id) {
+const UPDATE_EVENT_MUTATION = gql`
+  mutation updateEvent($id: ID!, $name: String!, $eventKind: EventKind!, $date: DateTime!, $desc: String) {
+    updateEvent(id: $id, name: $name, eventKind: $eventKind, date: $date, desc: $desc) {
       id
       name
       eventKind
       date
       desc
-      isPublished
     }
   }
 `
 
-const DELETE_EVENT = gql`
+const DELETE_EVENT_MUTATION = gql`
   mutation deleteEvent($id: ID!) {
     deleteEvent(id: $id) {
       id
@@ -118,10 +115,10 @@ export default compose(
       },
     }),
   }),
-  graphql(UPDATE_EVENT, {
+  graphql(UPDATE_EVENT_MUTATION, {
     name: 'updateEvent',
   }),
-  graphql(DELETE_EVENT, {
+  graphql(DELETE_EVENT_MUTATION, {
     name: 'deleteEvent',
   }),
   withRouter,

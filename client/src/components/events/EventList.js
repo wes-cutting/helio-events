@@ -52,13 +52,12 @@ const EVENTS_QUERY = gql`
       desc
       eventKind
       date
-      
     }
   }
 `
 
 export default graphql(EVENTS_QUERY, {
-  name: 'eventsQuery', // name of the injected prop: this.props.feedQuery...
+  name: 'eventsQuery',
   options: {
     fetchPolicy: 'network-only',
   },

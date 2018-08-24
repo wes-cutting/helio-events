@@ -7,9 +7,9 @@ import { Link } from 'react-router-dom'
 export default class Event extends Component {
   render() {
     let name = this.props.event.name
-    if (this.props.isDraft) {
-      name = `${name} (Event)`
-    }
+    // if (this.props.isDraft) {
+    //   name = `${name} (Event)`
+    // }
 
     return (
       <Link className="no-underline ma1" to={`/event/${this.props.event.id}`}>

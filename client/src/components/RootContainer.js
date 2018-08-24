@@ -23,6 +23,7 @@ import GlobalEvent from './events/GlobalEvent'
 import CourseEvent from './events/CourseEvent'
 import EventList from './events/EventList'
 import SingleEvent from './events/SingleEvent'
+// import UpdateEvent from "./events/UpdateEvent";
 
 import TemplateList from './templates/TemplateList'
 import CreateTemplate from './templates/CreateTemplate'

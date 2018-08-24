@@ -31,7 +31,6 @@ class GlobalEvent extends Component {
             value={this.state.name}
           />
           <select
-            autoFocus
             className="w-100 pa2 mv2 br2 b--black-20 bw1"
             onChange={e => this.setState({ eventKind: e.target.value })}
             placeholder="Type"
@@ -43,7 +42,6 @@ class GlobalEvent extends Component {
             <option value="SHOWCASE">SHOWCASE</option>
           </select>
           <input
-            autoFocus
             className="w-100 pa2 mv2 br2 b--black-20 bw1"
             onChange={e => this.setState({ date: e.target.value })}
             placeholder="Date"
