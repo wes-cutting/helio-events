@@ -34,6 +34,7 @@ import CourseDetails from "./courses/CourseDetails";
 import TemplateList from './templates/TemplateList'
 import CreateTemplate from './templates/CreateTemplate'
 import TemplateDetail from './templates/TemplateDetail'
+import UpdateEvent from "./events/UpdateEvent";
 
 const ProtectedRoute = ({ component: Component, token, ...rest }) => {
   return token ? (
@@ -241,6 +242,11 @@ class RootContainer extends Component {
           />
           <ProtectedRoute
             token={this.state.token}
+            path="/updateEvent"
+            component={UpdateEvent}
+          />
+          <ProtectedRoute
+            token={this.state.token}
             path="/courses"
             component={Courses}
           />
@@ -277,7 +283,6 @@ class RootContainer extends Component {
           {/*<Route path="/post/:id" component={DetailPage} />*/}
           <Route path="/event/:id" component={SingleEvent} />
           <Route path="/course/:id" component={CourseDetails} />
-          <Route path="/template/:id" component={TemplateDetail} />
           <Route path="/template/:id" component={TemplateDetail} />
           <Route
             token={this.state.token}

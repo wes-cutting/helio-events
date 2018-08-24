@@ -49,6 +49,7 @@ class SingleEvent extends Component {
         </Fragment>
       )
     }
+
     return (
       <a
         className="f6 dim br1 ba ph3 pv2 mb2 dib black pointer"
