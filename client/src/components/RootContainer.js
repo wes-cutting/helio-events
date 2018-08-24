@@ -92,7 +92,6 @@ class RootContainer extends Component {
   }
 
   render() {
-    console.log('baloney on wallt',this.props)
     return (
       <Router>
         <Fragment>
@@ -107,14 +106,26 @@ class RootContainer extends Component {
     return (
       <nav className="pa3 pa4-ns">
         <Link className="link dim black b f6 f5-ns dib mr3" to="/" title="Feed">
-          Blog
-        </Link>
-        <NavLink
-          className="link dim f6 f5-ns dib mr3 black"
-          activeClassName="gray"
-          exact={true}
-          to="/"
-          title="Feed">Feed</NavLink>
+          <h1>Welcome to the HelioTraining Calendar</h1>
+        </Link><br/>
+        {/*<NavLink*/}
+          {/*className="link dim f6 f5-ns dib mr3 black"*/}
+          {/*activeClassName="gray"*/}
+          {/*exact={true}*/}
+          {/*to="/"*/}
+          {/*title="Feed">Feed</NavLink>*/}
+
+        {/*{this.props.data &&*/}
+        {/*// this.props.data.me &&*/}
+        {/*// this.props.data.me.email &&*/}
+        {/*this.state.token && (*/}
+          {/*<NavLink*/}
+            {/*className="link dim f6 f5-ns dib mr3 black"*/}
+            {/*activeClassName="gray"*/}
+            {/*exact={true}*/}
+            {/*to="/drafts"*/}
+            {/*title="Drafts">Drafts</NavLink>*/}
+        {/*)}*/}
 
         {this.props.data &&
         // this.props.data.me &&
@@ -124,8 +135,11 @@ class RootContainer extends Component {
             className="link dim f6 f5-ns dib mr3 black"
             activeClassName="gray"
             exact={true}
-            to="/drafts"
-            title="Drafts">Drafts</NavLink>
+            to="/courses"
+            title="Courses"
+          >
+            Courses
+          </NavLink>
         )}
 
         {this.props.data &&
@@ -137,24 +151,10 @@ class RootContainer extends Component {
             activeClassName="gray"
             exact={true}
             to="/events"
-            title="Events">Events</NavLink>
-        )}
-
-        {this.props.data &&
-        // this.props.data.me &&
-        // this.props.data.me.email &&
-        this.state.token && (
-          <NavLink
-            className="link dim f6 f5-ns dib mr3 black"
-            activeClassName="gray"
-            exact={true}
-            to="/Course"
-            title="Course"
-          >
-            Course
+            title="Events">
+            Events
           </NavLink>
         )}
-
 
         {this.props.data &&
         // this.props.data.me &&
@@ -215,7 +215,7 @@ class RootContainer extends Component {
           // this.props.data.me.email &&
           this.state.token && (
             <Link
-              to="/create"
+              to="/createCourse"
               className="f6 link dim br1 ba ph3 pv2 fr mb2 dib black"
             >
               + Create Course

@@ -2,6 +2,8 @@
 // Typically seen in a modal
 // Not limited to EventKind (Course or Global)
 
+// Still a work in progess
+
 import React, {Component} from 'react'
 import { withRouter } from 'react-router-dom'
 import { graphql } from 'react-apollo'
@@ -18,7 +20,9 @@ class UpdateEvent extends Component {
     buttonText: "Update"
   }
 
-  updateEvent = () => {
+//Need to pass props into state to populate fields to be changed
+
+  render () {
     return (
       <div className="pa4 flex justify-center bg-white">
         <form onSubmit={this.handlePost}>
@@ -76,38 +80,38 @@ class UpdateEvent extends Component {
       </div>
     )
   }
-  render () {
-    let update = this.updateEvent()
-      return (
-        <div mutation={this.UpdateEventWithMutation}>
-Hi
-          {(updateEvent, {args}) => (
-            <form onSubmit={ e => {
-              e.preventDefault()
-                if(this.state.isUpdating) {
-                  updateEvent({
-                    variables: {
-                      id: this.state.id,
-                      name: this.state.name,
-                      desc: this.state.desc,
-                      eventKind: this.state.eventKind,
-                      date: this.state.date
-                    }
-                  })
-                  this.setState({ buttonText: "Update" })
-                  window.location.reload(true)
-                } else {
-                  this.setState({ buttonText: "Submit" })
-            }
-            this.setState({ isUpdating: !this.state.isUpdating })
-            }}>
-              { this.state.isUpdating ? update : null }
-              <input type="submit">{this.state.buttonText}</input>
-            </form>
-          )}
-        </div>
-      )
-  }
+//   render () {
+//     let update = this.updateEvent()
+//       return (
+//         <div mutation={this.UpdateEventWithMutation}>
+// Hi
+//           {(updateEvent, {args}) => (
+//             <form onSubmit={ e => {
+//               e.preventDefault()
+//                 if(this.state.isUpdating) {
+//                   updateEvent({
+//                     variables: {
+//                       id: this.state.id,
+//                       name: this.state.name,
+//                       desc: this.state.desc,
+//                       eventKind: this.state.eventKind,
+//                       date: this.state.date
+//                     }
+//                   })
+//                   this.setState({ buttonText: "Update" })
+//                   window.location.reload(true)
+//                 } else {
+//                   this.setState({ buttonText: "Submit" })
+//             }
+//             this.setState({ isUpdating: !this.state.isUpdating })
+//             }}>
+//               { this.state.isUpdating ? update : null }
+//               <input type="submit">{this.state.buttonText}</input>
+//             </form>
+//           )}
+//         </div>
+//       )
+//   }
 }
 
 const UPDATE_EVENT_MUTATION = gql`
