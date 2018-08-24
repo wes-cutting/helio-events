@@ -30,6 +30,10 @@ import Courses from './courses/Courses'
 import CourseDetails from "./courses/CourseDetails";
 // import LimitedCourse from './courses/LimitedCourse'
 
+import TemplateList from './templates/TemplateList'
+import CreateTemplate from './templates/CreateTemplate'
+import TemplateDetail from './templates/TemplateDetail'
+
 const ProtectedRoute = ({ component: Component, token, ...rest }) => {
   return token ? (
     <Route {...rest} render={matchProps => <Component {...matchProps} />} />
@@ -86,6 +90,7 @@ class RootContainer extends Component {
   }
 
   render() {
+    console.log('baloney on wallt',this.props)
     return (
       <Router>
         <Fragment>
@@ -107,24 +112,20 @@ class RootContainer extends Component {
           activeClassName="gray"
           exact={true}
           to="/"
-          title="Feed"
-        >
-          Feed
-        </NavLink>
+          title="Feed">Feed</NavLink>
+
         {this.props.data &&
-          // this.props.data.me &&
-          // this.props.data.me.email &&
-          this.state.token && (
-            <NavLink
-              className="link dim f6 f5-ns dib mr3 black"
-              activeClassName="gray"
-              exact={true}
-              to="/drafts"
-              title="Drafts"
-            >
-              Drafts
-            </NavLink>
-          )}
+        // this.props.data.me &&
+        // this.props.data.me.email &&
+        this.state.token && (
+          <NavLink
+            className="link dim f6 f5-ns dib mr3 black"
+            activeClassName="gray"
+            exact={true}
+            to="/drafts"
+            title="Drafts">Drafts</NavLink>
+        )}
+
         {this.props.data &&
         // this.props.data.me &&
         // this.props.data.me.email &&
@@ -134,10 +135,7 @@ class RootContainer extends Component {
             activeClassName="gray"
             exact={true}
             to="/events"
-            title="Events"
-          >
-           Events
-          </NavLink>
+            title="Events">Events</NavLink>
         )}
 
         {this.props.data &&
@@ -155,6 +153,19 @@ class RootContainer extends Component {
           </NavLink>
         )}
 
+
+        {this.props.data &&
+        // this.props.data.me &&
+        // this.props.data.me.email &&
+        this.state.token && (
+          <NavLink
+            className="link dim f6 f5-ns dib mr3 black"
+            activeClassName="gray"
+            exact={true}
+            to="/templates"
+            title="Templates">Templates</NavLink>
+        )}
+
         {this.state.token ? (
           <div
             onClick={() => {
@@ -164,50 +175,38 @@ class RootContainer extends Component {
                 })
               window.location.href = '/'
             }}
-            className="f6 link dim br1 ba ph3 pv2 fr mb2 dib black"
-          >
-            Logout
-          </div>
-        ) : (
+            className="f6 link dim br1 ba ph3 pv2 fr mb2 dib black">Logout</div>
+            ) : (
           <Link
             to="/login"
-            className="f6 link dim br1 ba ph3 pv2 fr mb2 dib black"
-          >
-            Login
-          </Link>
+            className="f6 link dim br1 ba ph3 pv2 fr mb2 dib black">Login</Link>
         )}
+
         {this.props.data &&
         // this.props.data.me &&
         // this.props.data.me.email &&
         this.state.token && (
           <Link
             to="/globalEvent"
-            className="f6 link dim br1 ba ph3 pv2 fr mb2 dib black"
-          >
-            + Create Global Event
-          </Link>
+            className="f6 link dim br1 ba ph3 pv2 fr mb2 dib black">+ Create Global Event</Link>
         )}
+
         {this.props.data &&
         // this.props.data.me &&
         // this.props.data.me.email &&
         this.state.token && (
           <Link
             to="/courseEvent"
-            className="f6 link dim br1 ba ph3 pv2 fr mb2 dib black"
-          >
-            + Create Course Event
-          </Link>
+            className="f6 link dim br1 ba ph3 pv2 fr mb2 dib black">+ Create Course Event</Link>
         )}
+
         {this.props.data &&
           // this.props.data.me &&
           // this.props.data.me.email &&
           this.state.token && (
             <Link
-              to="/create"
-              className="f6 link dim br1 ba ph3 pv2 fr mb2 dib black"
-            >
-              + Create Draft
-            </Link>
+              to="/createTemplate"
+              className="f6 link dim br1 ba ph3 pv2 fr mb2 dib black">Create a Template</Link>
           )}
           {this.props.data &&
           // this.props.data.me &&
@@ -259,9 +258,26 @@ class RootContainer extends Component {
             path="/create"
             component={TemplateSelect}
           />
+          <ProtectedRoute
+            token={this.state.token}
+            path="/createTemplate"
+            component={CreateTemplate}
+          />
+          <ProtectedRoute
+            token={this.state.token}
+            path="/templates"
+            component={TemplateList}
+          />
+          <ProtectedRoute
+            token={this.state.token}
+            path="/updateTemplate"
+            component={CreateTemplate}
+          />
           <Route path="/post/:id" component={DetailPage} />
           <Route path="/event/:id" component={SingleEvent} />
           <Route path="/course/:id" component={CourseDetails} />
+          <Route path="/template/:id" component={TemplateDetail} />
+          <Route path="/template/:id" component={TemplateDetail} />
           <Route
             token={this.state.token}
             path="/login"
@@ -281,6 +297,7 @@ class RootContainer extends Component {
     )
   }
 }
+
 
 const ME_QUERY = gql`
   query MeQuery {
