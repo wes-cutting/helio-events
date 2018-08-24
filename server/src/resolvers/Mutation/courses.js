@@ -4,13 +4,12 @@ const { getUserId } = require('../../utils')
 // deleteCourse(id: ID!): Course!
 
 const courses = {
-    async createCourse(parent, { name, start, isFinished, templateId }, ctx, info) {
+    async createCourse(parent, { name, start, templateId }, ctx, info) {
         return ctx.db.mutation.createCourse(
             {
                 data: {
                     name,
                     start,
-                    isFinished: false,
                     templateId: {
                         connect: { id: templateId},
                     }
@@ -35,7 +34,7 @@ const courses = {
                 data: {
                     name,
                     start,
-                    isFinished,
+                    isFinished: false,
                     eventId: {
                         set: { eventId }
                     }

@@ -7,9 +7,10 @@ import {
   Switch,
   Redirect,
 } from 'react-router-dom'
-import FeedPage from './posts/FeedPage'
-import DraftsPage from './posts/DraftsPage'
-import DetailPage from './posts/DetailPage'
+// import FeedPage from './posts/FeedPage'
+// import DraftsPage from './posts/DraftsPage'
+// import CreatePage from './posts/CreatePage'
+// import DetailPage from './posts/DetailPage'
 import LoginPage from './users/LoginPage'
 import SignupPage from './users/SignupPage'
 import PageNotFound from './PageNotFound'
@@ -24,6 +25,11 @@ import CourseEvent from './events/CourseEvent'
 import EventList from './events/EventList'
 import SingleEvent from './events/SingleEvent'
 // import UpdateEvent from "./events/UpdateEvent";
+
+import TemplateSelect from './courses/TemplateSelect'
+import Courses from './courses/Courses'
+import CourseDetails from "./courses/CourseDetails";
+// import LimitedCourse from './courses/LimitedCourse'
 
 import TemplateList from './templates/TemplateList'
 import CreateTemplate from './templates/CreateTemplate'
@@ -47,6 +53,7 @@ class RootContainer extends Component {
     }
   }
 
+  // dont touch below here
   refreshTokenFn(data = {}) {
     const token = data.AUTH_TOKEN
 
@@ -77,7 +84,7 @@ class RootContainer extends Component {
       console.log('')
     }
   }
-
+// dont touch above here
   //verify localStorage check
   componentDidMount() {
     this.bootStrapData()
@@ -107,7 +114,7 @@ class RootContainer extends Component {
           exact={true}
           to="/"
           title="Feed">Feed</NavLink>
-        
+
         {this.props.data &&
         // this.props.data.me &&
         // this.props.data.me.email &&
@@ -119,7 +126,7 @@ class RootContainer extends Component {
             to="/drafts"
             title="Drafts">Drafts</NavLink>
         )}
-        
+
         {this.props.data &&
         // this.props.data.me &&
         // this.props.data.me.email &&
@@ -131,7 +138,23 @@ class RootContainer extends Component {
             to="/events"
             title="Events">Events</NavLink>
         )}
-  
+
+        {this.props.data &&
+        // this.props.data.me &&
+        // this.props.data.me.email &&
+        this.state.token && (
+          <NavLink
+            className="link dim f6 f5-ns dib mr3 black"
+            activeClassName="gray"
+            exact={true}
+            to="/Course"
+            title="Course"
+          >
+            Course
+          </NavLink>
+        )}
+
+
         {this.props.data &&
         // this.props.data.me &&
         // this.props.data.me.email &&
@@ -143,7 +166,7 @@ class RootContainer extends Component {
             to="/templates"
             title="Templates">Templates</NavLink>
         )}
-        
+
         {this.state.token ? (
           <div
             onClick={() => {
@@ -159,7 +182,7 @@ class RootContainer extends Component {
             to="/login"
             className="f6 link dim br1 ba ph3 pv2 fr mb2 dib black">Login</Link>
         )}
-        
+
         {this.props.data &&
         // this.props.data.me &&
         // this.props.data.me.email &&
@@ -168,7 +191,7 @@ class RootContainer extends Component {
             to="/globalEvent"
             className="f6 link dim br1 ba ph3 pv2 fr mb2 dib black">+ Create Global Event</Link>
         )}
-        
+
         {this.props.data &&
         // this.props.data.me &&
         // this.props.data.me.email &&
@@ -177,7 +200,7 @@ class RootContainer extends Component {
             to="/courseEvent"
             className="f6 link dim br1 ba ph3 pv2 fr mb2 dib black">+ Create Course Event</Link>
         )}
-        
+
         {this.props.data &&
           // this.props.data.me &&
           // this.props.data.me.email &&
@@ -185,6 +208,17 @@ class RootContainer extends Component {
             <Link
               to="/createTemplate"
               className="f6 link dim br1 ba ph3 pv2 fr mb2 dib black">Create a Template</Link>
+          )}
+          {this.props.data &&
+          // this.props.data.me &&
+          // this.props.data.me.email &&
+          this.state.token && (
+            <Link
+              to="/create"
+              className="f6 link dim br1 ba ph3 pv2 fr mb2 dib black"
+            >
+              + Create Course
+            </Link>
           )}
       </nav>
     )
@@ -194,49 +228,55 @@ class RootContainer extends Component {
     return (
       <div className="fl w-100 pl4 pr4">
         <Switch>
-          <Route exact path="/" component={FeedPage}/>
-            <ProtectedRoute
-              token={this.state.token}
-              path="/globalEvent"
-              component={GlobalEvent}
-            />
-            <ProtectedRoute
-              token={this.state.token}
-              path="/courseEvent"
-              component={CourseEvent}
-            />
-            <ProtectedRoute
-              token={this.state.token}
-              path="/events"
-              component={EventList}
-            />
-            <ProtectedRoute
-              token={this.state.token}
-              path="/drafts"
-              component={DraftsPage}
-            />
-            <ProtectedRoute
-              token={this.state.token}
-              path="/createTemplate"
-              component={CreateTemplate}
-            />
-            <ProtectedRoute
-              token={this.state.token}
-              path="/templates"
-              component={TemplateList}
-            />
-            <ProtectedRoute
-              token={this.state.token}
-              path="/updateTemplate"
-              component={CreateTemplate}
-            />
-            {/*<ProtectedRoute*/}
-              {/*token={this.state.token}*/}
-              {/*path="/templatedetail"*/}
-              {/*component={TemplateDetail}*/}
-            {/*/>*/}
+          <Route exact path="/" component={Courses} />
+          <ProtectedRoute
+            token={this.state.token}
+            path="/globalEvent"
+            component={GlobalEvent}
+          />
+          <ProtectedRoute
+            token={this.state.token}
+            path="/courseEvent"
+            component={CourseEvent}
+          />
+          <ProtectedRoute
+            token={this.state.token}
+            path="/courses"
+            component={Courses}
+          />
+          <ProtectedRoute
+            token={this.state.token}
+            path="/events"
+            component={EventList}
+          />
+          <ProtectedRoute
+            token={this.state.token}
+            path="/drafts"
+            component={DraftsPage}
+          />
+          <ProtectedRoute
+            token={this.state.token}
+            path="/create"
+            component={TemplateSelect}
+          />
+          <ProtectedRoute
+            token={this.state.token}
+            path="/createTemplate"
+            component={CreateTemplate}
+          />
+          <ProtectedRoute
+            token={this.state.token}
+            path="/templates"
+            component={TemplateList}
+          />
+          <ProtectedRoute
+            token={this.state.token}
+            path="/updateTemplate"
+            component={CreateTemplate}
+          />
           <Route path="/post/:id" component={DetailPage} />
           <Route path="/event/:id" component={SingleEvent} />
+          <Route path="/course/:id" component={CourseDetails} />
           <Route path="/template/:id" component={TemplateDetail} />
           <Route path="/template/:id" component={TemplateDetail} />
           <Route
