@@ -249,11 +249,11 @@ class RootContainer extends Component {
             path="/events"
             component={EventList}
           />
-          <ProtectedRoute
-            token={this.state.token}
-            path="/drafts"
-            component={DraftsPage}
-          />
+          {/*<ProtectedRoute*/}
+            {/*token={this.state.token}*/}
+            {/*path="/drafts"*/}
+            {/*component={DraftsPage}*/}
+          {/*/>*/}
           <ProtectedRoute
             token={this.state.token}
             path="/create"
@@ -274,7 +274,7 @@ class RootContainer extends Component {
             path="/updateTemplate"
             component={CreateTemplate}
           />
-          <Route path="/post/:id" component={DetailPage} />
+          {/*<Route path="/post/:id" component={DetailPage} />*/}
           <Route path="/event/:id" component={SingleEvent} />
           <Route path="/course/:id" component={CourseDetails} />
           <Route path="/template/:id" component={TemplateDetail} />
