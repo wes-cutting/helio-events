@@ -14,10 +14,9 @@ class TemplateDetail extends Component {
         </div>
       )
     }
-    console.log('test', this.props.templateQuery)
     
     const { courseTemplate } = this.props.templateQuery
-    console.log(courseTemplate);
+    
     let action = this._renderAction(courseTemplate)
     
     return (
@@ -73,12 +72,12 @@ class TemplateDetail extends Component {
     await this.props.updateCourseTemplate({
       variables: { id, name, courseKind, campus, hours, days },
     })
-    this.props.history.replace('/updateTemplate')
+    this.props.history.replace('/updateEvent')
   }
 }
 
 const TEMPLATE_QUERY = gql`
-  query CourseTemplateQuery($id: ID!) {
+  query courseTemplates($id: ID!) {
     courseTemplate (id: $id) {
       id
       name
@@ -92,7 +91,7 @@ const TEMPLATE_QUERY = gql`
 
 const UPDATE_TEMPLATE = gql`
   mutation updateCourseTemplate($id: ID!, $name: String!, $courseKind: CourseKind!, $campus: Location!, $hours: Int!, $days: [Day!]!) {
-    updateCourseTemplate (id: $id, name: $name, courseKind: $courseKind, campus: $campus, hours: $hours, days: $days) {
+    updateCourseTemplate (id: $id, name: $name, courseKind: $courseKind, campus: $campus, hours: $hours, days: {set: $days} ) {
       id
       name
       courseKind
@@ -113,7 +112,7 @@ const DELETE_TEMPLATE = gql`
 
 export default compose(
   graphql(TEMPLATE_QUERY, {
-    name: 'templateQuery',
+    name: 'courseTemplate',
     options: props => ({
       variables: {
         id: props.match.params.id,
