@@ -72,7 +72,7 @@ class TemplateDetail extends Component {
     await this.props.updateCourseTemplate({
       variables: { id, name, courseKind, campus, hours, days },
     })
-    this.props.history.replace('/updateEvent')
+    this.props.history.replace('/createEvent')
   }
 }
 
@@ -112,7 +112,7 @@ const DELETE_TEMPLATE = gql`
 
 export default compose(
   graphql(TEMPLATE_QUERY, {
-    name: 'courseTemplate',
+    name: 'templateQuery',
     options: props => ({
       variables: {
         id: props.match.params.id,
