@@ -37,7 +37,7 @@ class Courses extends Component {
             key={course.id}
             LimitedCourse={course}
             refresh={() => this.props.coursesQuery.refetch()}
-            isDraft={!course.isPublished}
+
           />
         ))}
         {this.props.children}
@@ -50,51 +50,26 @@ const COURSES_QUERY = gql`
   query CoursesQuery {
     courses {
       id
+      template {
+        id
+        name
+      }
       name
       start
+      events{
+        id
+        name
+      }
       isFinished
     }
   }
 `
-const FEED_SUBSCRIPTION = gql`
-  subscription FeedSubscription {
-    feedSubscription {
-      node {
-        id
-        text
-        title
-        isPublished
-        author {
-          name
-        }
-      }
-    }
-  }
-`
+
 
 export default graphql(COURSES_QUERY, {
   name: 'coursesQuery',
   options: {
     fetchPolicy: 'network-only',
   },
-  props: props =>
-    Object.assign({}, props, {
-      subscribeToNewFeed: params => {
-        return props.feedQuery.subscribeToMore({
-          document: FEED_SUBSCRIPTION,
-          updateQuery: (prev, { subscriptionData }) => {
-            if (!subscriptionData.data) {
-              return prev
-            }
-            const newPost = subscriptionData.data.feedSubscription.node
-            if (prev.feed.find(post => post.id === newPost.id)) {
-              return prev
-            }
-            return Object.assign({}, prev, {
-              feed: [...prev.feed, newPost],
-            })
-          },
-        })
-      },
-    }),
+
 })(Courses)

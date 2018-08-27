@@ -19,6 +19,7 @@ export default class LimitedCourse extends Component {
             <div className="w-100 w-60-ns pl3-ns">
               <h1 className="f3 fw1 baskerville mt0 lh-title">{name}</h1>
               <p className="f6 f5-l lh-copy">{this.props.LimitedCourse.start}</p>
+              <p className="f6 f5-1 1h-copy">{this.props.LimitedCourse.template.name}</p>
               {/*<p className="f6 lh-copy mv0">By {this.props.LimitedCourse.author.name}</p>*/}
             </div>
           </div>

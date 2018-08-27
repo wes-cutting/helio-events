@@ -106,7 +106,7 @@ class RootContainer extends Component {
     return (
       <nav className="pa3 pa4-ns">
         <Link className="link dim black b f6 f5-ns dib mr3" to="/" title="Feed">
-          <h1>Welcome to the HelioTraining Calendar</h1>
+          <h1>Welcome to the Helio Training Calendar</h1>
         </Link><br/>
         {/*<NavLink*/}
           {/*className="link dim f6 f5-ns dib mr3 black"*/}
@@ -151,7 +151,8 @@ class RootContainer extends Component {
             activeClassName="gray"
             exact={true}
             to="/events"
-            title="Events">
+            title="Events"
+          >
             Events
           </NavLink>
         )}
@@ -165,7 +166,10 @@ class RootContainer extends Component {
             activeClassName="gray"
             exact={true}
             to="/templates"
-            title="Templates">Templates</NavLink>
+            title="Templates"
+          >
+            Templates
+          </NavLink>
         )}
 
         {this.state.token ? (
@@ -262,7 +266,7 @@ class RootContainer extends Component {
           {/*/>*/}
           <ProtectedRoute
             token={this.state.token}
-            path="/create"
+            path="/createcourse"
             component={TemplateSelect}
           />
           <ProtectedRoute

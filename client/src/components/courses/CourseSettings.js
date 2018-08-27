@@ -17,17 +17,19 @@ import  { gql } from 'apollo-boost'
     template: this.props.template,
     name: this.props.name,
     start: this.props.start,
+    event: this.props.event,
   }
     updateCourseMutation = gql`
-        mutation updateCourse($id: ID, $template: String!, $name: String!, $start: Int!) {
+        mutation updateCourse($id: ID, $template: String!, $name: String!, $start: Int!, $event: String!) {
             updateCourse (
                 where: {id: $id},
-                data: {name: $name, template: $template, start: $start}
+                data: {name: $name, template: $template, start: $start, event: $event}
             ){
             id
             name
             template
             start
+            event
         }
     }
   `
@@ -41,6 +43,9 @@ import  { gql } from 'apollo-boost'
           <br/>
           <input type="datetime-local" value={this.state.start} onChange={event => this.setState({start: parseInt(event.target.value)})}/>
           <br/>
+          <TextField type="text" value={this.state.event} onChange={event => this.setState({event: event.target.value})}/>
+          <br/>
+          <input type="checkbox" id="myCheck"/>
       </Fragment>
     )
   }
@@ -58,7 +63,8 @@ import  { gql } from 'apollo-boost'
                     id: this.state.id,
                     name: this.state.name,
                     template: this.state.template,
-                    start: this.state.start
+                    start: this.state.start,
+                    event: this.state.event
                   }
               })
               this.setState({buttonText: "Update"})
@@ -77,18 +83,32 @@ import  { gql } from 'apollo-boost'
       }
     }
 
-const POST_QUERY =gql`
-  query PostQuery($id: ID!) {
-    post(id: $id) {
+const UPDATE_QUERY =gql`
+  query updateQuery($id: ID!) {
+    updateCourse(id: $id) {
       id
+      template
       name
       start
+      event
+      isFinished
+    }
+  }
+`
+const UPDATE_COURSE = gql`
+  mutation updateCourse($id: ID!) {
+    updateCourse(id: $id, template: $template, name: $name, start: $start, event: $event) {
+      id
+      template
+      name
+      start
+      event
       isFinished
     }
   }
 `
 
-const DELETE_MUTATION = gql`
+const DELETE_COURSE = gql`
   mutation deleteCourse($id: ID!) {
     deleteCourse(id: $id) {
       id
@@ -97,16 +117,18 @@ const DELETE_MUTATION = gql`
 `
 
 export default compose(
-  graphql(POST_QUERY, {
-    name: 'postQuery',
+  graphql(UPDATE_QUERY, {
+    name: 'updateQuery',
     options: props => ({
       variables: {
         id: props.match.params.id,
       },
     }),
   }),
-
-  graphql(DELETE_MUTATION, {
+  graphql(UPDATE_COURSE, {
+    name: 'updateCourse',
+  }),
+  graphql(DELETE_COURSE, {
     name: 'deleteCourse',
   }),
   withRouter,

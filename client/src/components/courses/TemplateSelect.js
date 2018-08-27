@@ -71,7 +71,7 @@ class TemplateSelect extends Component {
     await this.props.createCourseMutation({
       vaiables: { name, start, templateID },
     })
-    this.props.history.replace('/create')
+    this.props.history.replace('/createcourse')
   }
 }
 

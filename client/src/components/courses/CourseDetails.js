@@ -15,7 +15,7 @@ import { gql } from 'apollo-boost'
 
 class CourseDetails extends Component {
   render() {
-    if (this.props.postQuery.loading) {
+    if (this.props.courseQuery.loading) {
       return (
         <div className="flex w-100 h-100 items-center justify-center pt7">
           <div>Loading (from {process.env.REACT_APP_GRAPHQL_ENDPOINT})</div>
@@ -23,26 +23,28 @@ class CourseDetails extends Component {
       )
     }
 
-    const { post } = this.props.postQuery
-
-    let action = this._renderAction(post)
+    const { course } = this.props.courseQuery
+    console.log('test', course);
+    let action = this._renderAction(course)
 
     return (
       <Fragment>
-        <h1 className="f3 black-80 fw4 lh-solid">{post.name}</h1>
-        <p className="black-80 fw3">{post.start}</p>
+        <h1 className="f3 black-80 fw4 lh-solid">{course.name}</h1>
+        <p className="black-80 fw3">{course.template.name}</p>
+        <p className="black-80 fw3">{course.start}</p>
+        <ul className="black-80 fw3">{course.events.map(event => (<li>{event.name}</li>))}</ul>
         {action}
       </Fragment>
     )
   }
 
-  _renderAction = ({ id, isPublished }) => {
-    if (!isPublished) {
+  _renderAction = ({ id, template, name, start, event }) => {
+    if (arguments) {
       return (
         <Fragment>
           <a
             className="f6 dim br1 ba ph3 pv2 mb2 dib black pointer"
-            onClick={() => this.publishDraft(id)}
+            onClick={() => this.updateCourse( id, template, name, start, event )}
           >
             Update
           </a>{' '}
@@ -72,26 +74,53 @@ class CourseDetails extends Component {
     this.props.history.replace('/')
   }
 
-  publishDraft = async id => {
-    await this.props.publishDraft({
-      variables: { id },
+  updateCourse = async ( id, template, name, start, event ) => {
+    await this.props.updateCourse({
+      variables: { id, template, name, start, event },
     })
     this.props.history.replace('/')
   }
 }
 
-const POST_QUERY =gql`
-  query PostQuery($id: ID!) {
-    post(id: $id) {
+const COURSE_QUERY =gql`
+  query CourseQuery($id: ID!) {
+    course(id: $id) {
       id
+      template {
+        id
+        name
+      }
       name
       start
+      events{
+        id
+        name
+      }
+      isFinished
+    }
+  }
+`
+const UPDATE_COURSE = gql`
+  mutation updateCourse($id: ID!) {
+    updateCourse(id: $id, template: $template, name: $name, start: $start, event: $event) {
+      id
+      template {
+        id
+        name
+      }
+      name
+      start
+      events{
+        id
+        name
+      }
       isFinished
     }
   }
 `
 
-const DELETE_MUTATION = gql`
+
+const DELETE_COURSE = gql`
   mutation deleteCourse($id: ID!) {
     deleteCourse(id: $id) {
       id
@@ -100,16 +129,18 @@ const DELETE_MUTATION = gql`
 `
 
 export default compose(
-  graphql(POST_QUERY, {
-    name: 'postQuery',
+  graphql(COURSE_QUERY, {
+    name: 'courseQuery',
     options: props => ({
       variables: {
         id: props.match.params.id,
       },
     }),
   }),
-
-  graphql(DELETE_MUTATION, {
+  graphql(UPDATE_COURSE, {
+    name: 'updateCourse',
+  }),
+  graphql(DELETE_COURSE, {
     name: 'deleteCourse',
   }),
   withRouter,
