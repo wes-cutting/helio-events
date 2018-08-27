@@ -80,6 +80,21 @@ class UpdateEvent extends Component {
       </div>
     )
   }
+
+  handlePost = async e => {
+    e.preventDefault()
+    const { id, name, eventKind, date, desc } = this.state
+    await this.props.updateEvent({
+      variables: {  id: this.state.id,
+                    name: this.state.name,
+                    eventKind: this.state.eventKind,
+                    date: this.state.date,
+                    desc: this.state.desc
+      },
+    })
+    this.props.history.replace('/events')
+  }
+
 //   render () {
 //     let update = this.updateEvent()
 //       return (

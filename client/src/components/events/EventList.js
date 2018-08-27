@@ -35,7 +35,7 @@ class EventList extends Component {
             key={event.id}
             event={event}
             refresh={() => this.props.eventsQuery.refetch()}
-            isDraft={!event.isPublished}
+            // isDraft={!event.isPublished}
           />
         ))}
         {this.props.children}
