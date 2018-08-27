@@ -36,6 +36,7 @@ import CreateTemplate from './templates/CreateTemplate'
 import TemplateDetail from './templates/TemplateDetail'
 import UpdateEvent from "./events/UpdateEvent";
 
+
 const ProtectedRoute = ({ component: Component, token, ...rest }) => {
   return token ? (
     <Route {...rest} render={matchProps => <Component {...matchProps} />} />
@@ -212,19 +213,16 @@ class RootContainer extends Component {
           this.state.token && (
             <Link
               to="/createTemplate"
-              className="f6 link dim br1 ba ph3 pv2 fr mb2 dib black">Create a Template</Link>
+              className="f6 link dim br1 ba ph3 pv2 fr mb2 dib black">+ Create a Template</Link>
           )}
-          {this.props.data &&
-          // this.props.data.me &&
-          // this.props.data.me.email &&
-          this.state.token && (
-            <Link
-              to="/createCourse"
-              className="f6 link dim br1 ba ph3 pv2 fr mb2 dib black"
-            >
-              + Create Course
-            </Link>
-          )}
+          {/*{this.props.data &&*/}
+          {/*// this.props.data.me &&*/}
+          {/*// this.props.data.me.email &&*/}
+          {/*this.state.token && (*/}
+            {/*<Link*/}
+              {/*to="/createCourse"*/}
+              {/*className="f6 link dim br1 ba ph3 pv2 fr mb2 dib black">+ Create Course</Link>*/}
+          {/*)}*/}
       </nav>
     )
   }
@@ -266,7 +264,7 @@ class RootContainer extends Component {
           {/*/>*/}
           <ProtectedRoute
             token={this.state.token}
-            path="/createcourse"
+            path="/createCourse"
             component={TemplateSelect}
           />
           <ProtectedRoute

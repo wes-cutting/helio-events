@@ -3,7 +3,6 @@
 // Modal should be able to exit without performing the operation of the given component
 
 import React from 'react';
-import ReactDOM from 'react-dom';
 import Modal from 'react-modal';
 
 const customStyles = {
@@ -18,9 +17,9 @@ const customStyles = {
 };
 
 // Make sure to bind modal to your appElement (http://reactcommunity.org/react-modal/accessibility/)
-Modal.setAppElement('#yourAppElement')
+// Modal.setAppElement('#yourAppElement')
 
-class App extends React.Component {
+class CustomModal extends React.Component {
   constructor() {
     super();
     
@@ -29,18 +28,13 @@ class App extends React.Component {
     };
     
     this.openModal = this.openModal.bind(this);
-    this.afterOpenModal = this.afterOpenModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
   }
   
   openModal() {
     this.setState({modalIsOpen: true});
   }
-  
-  afterOpenModal() {
-    // references are now sync'd and can be accessed.
-    this.subtitle.style.color = '#1d1d1d';
-  }
+
   
   closeModal() {
     this.setState({modalIsOpen: false});
@@ -49,29 +43,19 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <button onClick={this.openModal}>Open Modal</button>
+        <button onClick={this.openModal} className="f6 dim br1 ba ph3 pv2 mb2 dib black pointer">{this.props.buttonText}</button>
         <Modal
           isOpen={this.state.modalIsOpen}
-          onAfterOpen={this.afterOpenModal}
           onRequestClose={this.closeModal}
           style={customStyles}
           contentLabel="Example Modal"
         >
-          
-          <h2 ref={subtitle => this.subtitle = subtitle}>Hello</h2>
-          <button onClick={this.closeModal}>close</button>
-          <div>I am a modal</div>
-          <form>
-            <input />
-            <button>tab navigation</button>
-            <button>stays</button>
-            <button>inside</button>
-            <button>the modal</button>
-          </form>
+          {this.props.component}
         </Modal>
       </div>
     );
   }
 }
 
-ReactDOM.render(<App />, appElement);
+export default CustomModal
+

@@ -10,10 +10,9 @@ import  { gql } from 'apollo-boost'
 
 class TemplateSelect extends Component {
   state= {
-    template: this.props.template,
     name: '',
     start: '',
-    templateID: '',
+    templateID: this.props.templateId,
   }
 
   render() {
@@ -21,13 +20,7 @@ class TemplateSelect extends Component {
       <div className="pa4 flex justify-center bg-white">
         <form onSubmit={this.handlePost}>
           <h1>Create Course</h1>
-          {/*<select>*/}
-            {/*className="w-100 pa2 mv2 br2 b--black-20 bw1"*/}
-            {/*onChange={e => this.setState({ template: e.target.value })}*/}
-            {/*placeholder="Select Template"*/}
-            {/*type="text"*/}
-            {/*value={this.state.template}*/}
-          {/*</select>*/}
+          Template: {this.props.templateName}
         <br/>
           Course Name:
           <input
@@ -69,19 +62,21 @@ class TemplateSelect extends Component {
     const { name, start } = this.state
     const { templateID } = this.state
     await this.props.createCourseMutation({
-      vaiables: { name, start, templateID },
+      variables: { name, start, templateID },
     })
-    this.props.history.replace('/createcourse')
+    this.props.history.replace('/courses')
   }
 }
 
 const CREATE_COURSE_MUTATION = gql`
-  mutation CreateCourseMutation($name: String!, $start: String!, $templateID: String!) {
-    createCourse(name: $name, start: $start, templateID: $templateID) {
+  mutation CreateCourseMutation($name: String!, $start: DateTime!, $templateID: ID!) {
+    createCourse(name: $name, start: $start, template: $templateID) {
       id
       name
       start
-      templateID
+      template{
+        name
+      }
     }
   }
 `

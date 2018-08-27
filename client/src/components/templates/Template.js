@@ -3,6 +3,8 @@
 
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import CustomModal from "../shared/Modal";
+import TemplateSelect from "../courses/TemplateSelect";
 
 export default class Template extends Component {
   render() {
@@ -10,7 +12,6 @@ export default class Template extends Component {
     // if (this.courseTemplate.isDraft) {
     //   name = `${name} (Template)`
     // }
-    
     return (
       <Link className="no-underline ma1" to={`/template/${this.props.courseTemplate.id}`}>
         <article className="bb b--black-10">

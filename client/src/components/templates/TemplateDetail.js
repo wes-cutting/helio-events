@@ -4,6 +4,8 @@ import React, { Component, Fragment } from 'react'
 import { graphql, compose } from 'react-apollo'
 import { withRouter } from 'react-router-dom'
 import  { gql } from 'apollo-boost'
+import CustomModal from '../shared/Modal'
+import TemplateSelect from '../courses/TemplateSelect'
 
 class TemplateDetail extends Component {
   render() {
@@ -16,7 +18,7 @@ class TemplateDetail extends Component {
     }
     
     const { courseTemplate } = this.props.templateQuery
-    
+
     let action = this._renderAction(courseTemplate)
     
     return (
@@ -33,6 +35,7 @@ class TemplateDetail extends Component {
   
   _renderAction = ({ id, name, courseKind, campus, hours, days }) => {
     if (arguments) {
+      const createCourse = <TemplateSelect templateId={id} templateName={name}/>
       return (
         <Fragment>
           <a
@@ -47,6 +50,10 @@ class TemplateDetail extends Component {
           >
             Delete
           </a>
+          <CustomModal
+            buttonText="Create Course"
+            component={createCourse}
+          />
         </Fragment>
       )
     }

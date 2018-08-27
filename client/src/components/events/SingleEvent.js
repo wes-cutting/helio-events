@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react'
 import { graphql, compose } from 'react-apollo'
 import { withRouter } from 'react-router-dom'
 import  { gql } from 'apollo-boost'
+import CustomModal from "../shared/Modal";
 
 // import UpdateEvent from './UpdateEvent'
 
@@ -34,12 +35,14 @@ class SingleEvent extends Component {
     if (arguments) {
       return (
         <Fragment>
-          <a
-            className="f6 dim br1 ba ph3 pv2 mb2 dib black pointer"
-            onClick={() => this.updateEvent(id, name, eventKind, date, desc)}
-          >
-            Update
-          </a>{' '}
+          {/*<a*/}
+            {/*className="f6 dim br1 ba ph3 pv2 mb2 dib black pointer"*/}
+            {/*onClick={() => this.updateEvent(id, name, eventKind, date, desc)}*/}
+          {/*>*/}
+            {/*Update*/}
+          {/*</a>*/}
+          <CustomModal buttonText="Update Event"/>
+          {' '}
           <a
             className="f6 dim br1 ba ph3 pv2 mb2 dib black pointer"
             onClick={() => this.deleteEvent(id)}
