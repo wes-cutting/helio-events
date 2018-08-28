@@ -5,13 +5,16 @@
 //
 // Corey is making a Figma for this functionality
 
-//Info from DeatilPage
+//Info from DetailPage
 
 
 import React, { Component, Fragment } from 'react'
 import { graphql, compose } from 'react-apollo'
 import { withRouter } from 'react-router-dom'
 import { gql } from 'apollo-boost'
+
+import CustomModal from '../shared/Modal'
+import CourseSettings from "./CourseSettings";
 
 class CourseDetails extends Component {
   render() {
@@ -40,14 +43,24 @@ class CourseDetails extends Component {
 
   _renderAction = ({ id, template, name, start, event }) => {
     if (arguments) {
+      const courseSettings = <CourseSettings name={ name } template={template} />
       return (
         <Fragment>
-          <a
-            className="f6 dim br1 ba ph3 pv2 mb2 dib black pointer"
-            onClick={() => this.updateCourse( id, template, name, start, event )}
-          >
-            Update
-          </a>{' '}
+          <CustomModal
+            buttonText="Update Course"
+            component={courseSettings}
+            />
+          {/*<a*/}
+            {/*className="f6 dim br1 ba ph3 pv2 mb2 dib black pointer"*/}
+            {/*onClick={() => this.updateCourse( id, template, name, start, event )}*/}
+          {/*>*/}
+            {/*Update*/}
+          {/*</a>*/}
+          {' '}
+          <CustomModal
+            buttonText="Delete Course"
+            component={courseSettings}
+          />
           <a
             className="f6 dim br1 ba ph3 pv2 mb2 dib black pointer"
             onClick={() => this.deleteCourse(id)}

@@ -6,10 +6,12 @@
 // Add Events via the CourseEvent.js component
 // Update Page
 
-import React, { Component, Fragment } from 'react'
-import { graphql, compose } from 'react-apollo'
+import React, { Component } from 'react'
+import { graphql } from 'react-apollo'
 import { withRouter } from 'react-router-dom'
 import  { gql } from 'apollo-boost'
+
+import CustomModal from '../shared/Modal'
 
  class CourseSettings extends Component {
   state = {
@@ -19,91 +21,73 @@ import  { gql } from 'apollo-boost'
     start: this.props.start,
     event: this.props.event,
   }
-    updateCourseMutation = gql`
-        mutation updateCourse($id: ID, $template: String!, $name: String!, $start: Int!, $event: String!) {
-            updateCourse (
-                where: {id: $id},
-                data: {name: $name, template: $template, start: $start, event: $event}
-            ){
-            id
-            name
-            template
-            start
-            event
-        }
-    }
-  `
 
-  updateComp = () => {
-    return (
-      <Fragment>
-          <TextField type="text" value={this.state.name} onChange={event => this.setState({name: event.target.value})}/>
-          <br/>
-          <TextField type="text" value={this.state.template} onChange={event => this.setState({template: event.target.value})}/>
-          <br/>
-          <input type="datetime-local" value={this.state.start} onChange={event => this.setState({start: parseInt(event.target.value)})}/>
-          <br/>
-          <TextField type="text" value={this.state.event} onChange={event => this.setState({event: event.target.value})}/>
-          <br/>
-          <input type="checkbox" id="myCheck"/>
-      </Fragment>
-    )
-  }
+   render() {
+     return (
+       <div className="pa4 flex justify-center bg-white">
+         <form onSubmit={this.handlePost}>
+           <h1>Update Course</h1>
+           Template: {this.props.templateName}
+           <br/>
+           Course Name:
+           <input
+             autoFocus
+             className="w-100 pa2 mv2 br2 b--black-20 bw1"
+             onChange={e => this.setState({ name: e.target.value })}
+             placeholder="Name"
+             type="text"
+             value={this.state.name}
+           />
+           Start Date:
+           <input
+             type="datetime-local"
+             className="db w-100 ba bw1 b--black-20 pa2 br2 mb2"
+             // cols={50}
+             onChange={e => this.setState({ start: e.target.value })}
+             placeholder="Start Date"
+             // rows={8}
+             value={this.state.start}
+           />
+           <input
+             className={`pa3 bg-black-10 bn ${this.state.start &&
+             this.state.name &&
+             'dim pointer'}`}
+             disabled={!this.state.start || !this.state.name }
+             type="submit"
+             value="Update"
+           />
+           <a className="f6 pointer" onClick={this.props.history.goBack}>
+             or cancel
+           </a>
+           <CustomModal
+             buttonText="Delete Course"
+             component={DELETE_COURSE}
+           />
+         </form>
+       </div>
+     )
+   }
 
-  render () {
-    const update= this.updateComp()
-    return (
-      <Mutation mutation={this.updateCourseMutation}>
-        {(updateCourse, {data}) => (
-          <form onSubmit={event => {
-            event.preventDefault()
-            if(this.state.idUpdating){
-              updateCourse({
-                  variables: {
-                    id: this.state.id,
-                    name: this.state.name,
-                    template: this.state.template,
-                    start: this.state.start,
-                    event: this.state.event
-                  }
-              })
-              this.setState({buttonText: "Update"})
-              window.location.reload(true)
-              } else {
-              this.setState({buttonText: "Submit"})
-              }
-              this.setState({isUpdating: !this.state.isUpdating })
-              }}>
-                  {this.state.isUpdating ? update : null}
-                  <input style={style} type="submit" size="medium" variant="contained">{this.state.buttonText}</input>
-          </form>
-              )}
-          </Mutation>
-        )
+   handlePost = async e => {
+     e.preventDefault()
+     const { name, start } = this.state
+     const { templateID } = this.state
+     await this.props.updateCourseMutation({
+       variables: { name, start, templateID },
+     })
+     this.props.history.replace('/courses')
+   }
+ }
+
+const UPDATE_COURSE_MUTATION = gql`
+  mutation UpdateCourseMutation($name: String!, $start: DateTime!, $templateID: ID!) {
+    updateCourse(name: $name, start: $start, template: $templateID) {
+      id
+      name
+      start
+      template{
+        name
       }
-    }
-
-const UPDATE_QUERY =gql`
-  query updateQuery($id: ID!) {
-    updateCourse(id: $id) {
-      id
-      template
-      name
-      start
-      event
-      isFinished
-    }
-  }
-`
-const UPDATE_COURSE = gql`
-  mutation updateCourse($id: ID!) {
-    updateCourse(id: $id, template: $template, name: $name, start: $start, event: $event) {
-      id
-      template
-      name
-      start
-      event
-      isFinished
     }
   }
 `
@@ -116,20 +100,84 @@ const DELETE_COURSE = gql`
   }
 `
 
-export default compose(
-  graphql(UPDATE_QUERY, {
-    name: 'updateQuery',
-    options: props => ({
-      variables: {
-        id: props.match.params.id,
-      },
-    }),
-  }),
-  graphql(UPDATE_COURSE, {
-    name: 'updateCourse',
-  }),
-  graphql(DELETE_COURSE, {
-    name: 'deleteCourse',
-  }),
-  withRouter,
-)(CourseSettings)
+const UpdateCourseWithMutation = graphql(UPDATE_COURSE_MUTATION, {
+  name: 'updateCourseMutation',
+})(CourseSettings)
+
+export default withRouter(UpdateCourseWithMutation)
+
+
+
+
+//
+//    render() {
+//      return (
+//        <div className="pa4 flex justify-center bg-white">
+//          <form onSubmit={this.handlePost}>
+//            <h1>Create Course</h1>
+//            Template: {this.props.templateName}
+//            <br/>
+//            Course Name:
+//            <input
+//              autoFocus
+//              className="w-100 pa2 mv2 br2 b--black-20 bw1"
+//              onChange={e => this.setState({ name: e.target.value })}
+//              placeholder="Name"
+//              type="text"
+//              value={this.state.name}
+//            />
+//            Start Date:
+//            <input
+//              type="datetime-local"
+//              className="db w-100 ba bw1 b--black-20 pa2 br2 mb2"
+//              // cols={50}
+//              onChange={e => this.setState({ start: e.target.value })}
+//              placeholder="Start Date"
+//              // rows={8}
+//              value={this.state.start}
+//            />
+//            <input
+//              className={`pa3 bg-black-10 bn ${this.state.start &&
+//              this.state.name &&
+//              'dim pointer'}`}
+//              disabled={!this.state.start || !this.state.name }
+//              type="submit"
+//              value="Create"
+//            />
+//            <a className="f6 pointer" onClick={this.props.history.goBack}>
+//              or cancel
+//            </a>
+//          </form>
+//        </div>
+//      )
+//    }
+//
+//    handlePost = async e => {
+//      e.preventDefault()
+//      const { name, start } = this.state
+//      const { templateID } = this.state
+//      await this.props.createCourseMutation({
+//        variables: { name, start, templateID },
+//      })
+//      this.props.history.replace('/courses')
+//    }
+//  }
+//
+//
+// export default compose(
+//   graphql(UPDATE_QUERY, {
+//     name: 'updateQuery',
+//     options: props => ({
+//       variables: {
+//         id: props.match.params.id,
+//       },
+//     }),
+//   }),
+//   graphql(UPDATE_COURSE, {
+//     name: 'updateCourse',
+//   }),
+//   graphql(DELETE_COURSE, {
+//     name: 'deleteCourse',
+//   }),
+//   withRouter,
+// )(CourseSettings)
