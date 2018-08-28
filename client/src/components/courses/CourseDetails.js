@@ -32,7 +32,8 @@ class CourseDetails extends Component {
 
     return (
       <Fragment>
-        <h1 className="f3 black-80 fw4 lh-solid">{course.name}</h1>
+        <h1>Course Details</h1>
+        <h2 className="f3 black-80 fw4 lh-solid">{course.name}</h2>
         <p className="black-80 fw3">{course.template.name}</p>
         <p className="black-80 fw3">{course.start}</p>
         <ul className="black-80 fw3">{course.events.map(event => (<li>{event.name}</li>))}</ul>

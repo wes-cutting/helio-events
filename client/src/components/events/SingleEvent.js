@@ -22,7 +22,8 @@ class SingleEvent extends Component {
 
     return (
       <Fragment>
-        <h1 className="f3 black-80 fw4 lh-solid">{event.name}</h1>
+        <h1>Event Details</h1>
+        <h2 className="f3 black-80 fw4 lh-solid">{event.name}</h2>
         <p className="black-80 fw3">{event.eventKind}</p>
         <p className="black-80 fw3">{event.date}</p>
         <p className="black-80 fw3">{event.desc}</p>

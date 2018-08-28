@@ -24,7 +24,8 @@ class TemplateDetail extends Component {
     
     return (
       <Fragment>
-        <h1 className="f3 black-80 fw4 lh-solid">{courseTemplate.name}</h1>
+        <h1>Template Details</h1>
+        <h2 className="f3 black-80 fw4 lh-solid">{courseTemplate.name}</h2>
         <p className="black-80 fw3">{courseTemplate.courseKind}</p>
         <p className="black-80 fw3">{courseTemplate.campus}</p>
         <p className="black-80 fw3">{courseTemplate.hours}</p>
