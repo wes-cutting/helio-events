@@ -34,7 +34,7 @@ class CustomModal extends React.Component {
   openModal() {
     this.setState({modalIsOpen: true});
   }
-
+  
   
   closeModal() {
     this.setState({modalIsOpen: false});

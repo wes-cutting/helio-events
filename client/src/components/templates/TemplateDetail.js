@@ -6,6 +6,7 @@ import { withRouter } from 'react-router-dom'
 import  { gql } from 'apollo-boost'
 import CustomModal from '../shared/Modal'
 import TemplateSelect from '../courses/TemplateSelect'
+import UpdateTemplate from './UpdateTemplate'
 
 class TemplateDetail extends Component {
   render() {
@@ -35,25 +36,24 @@ class TemplateDetail extends Component {
   
   _renderAction = ({ id, name, courseKind, campus, hours, days }) => {
     if (arguments) {
+      const updateTemplate = <UpdateTemplate id= { id } name={ name } courseKind={courseKind} campus={campus} hours={hours} days={days}/>
       const createCourse = <TemplateSelect templateId={id} templateName={name}/>
       return (
         <Fragment>
-          <a
-            className="f6 dim br1 ba ph3 pv2 mb2 dib black pointer"
-            onClick={() => this.updateCourseTemplate( id, name, courseKind, campus, hours, days )}
-          >
-            Update
-          </a>{' '}
+          <CustomModal
+            buttonText="Update Template"
+            component={updateTemplate}
+          />
+          <CustomModal
+            buttonText="Create Course"
+            component={createCourse}
+          />{' '}
           <a
             className="f6 dim br1 ba ph3 pv2 mb2 dib black pointer"
             onClick={() => this.deleteCourseTemplate(id)}
           >
             Delete
           </a>
-          <CustomModal
-            buttonText="Create Course"
-            component={createCourse}
-          />
         </Fragment>
       )
     }
@@ -79,7 +79,7 @@ class TemplateDetail extends Component {
     await this.props.updateCourseTemplate({
       variables: { id, name, courseKind, campus, hours, days },
     })
-    this.props.history.replace('/createEvent')
+    this.props.history.replace('/updateTemplate')
   }
 }
 
@@ -96,7 +96,7 @@ const TEMPLATE_QUERY = gql`
   }
 `
 
-const UPDATE_TEMPLATE = gql`
+const UPDATE_TEMPLATE_MUTATION = gql`
   mutation updateCourseTemplate($id: ID!, $name: String!, $courseKind: CourseKind!, $campus: Location!, $hours: Int!, $days: [Day!]!) {
     updateCourseTemplate (id: $id, name: $name, courseKind: $courseKind, campus: $campus, hours: $hours, days: {set: $days} ) {
       id
@@ -109,7 +109,7 @@ const UPDATE_TEMPLATE = gql`
   }
 `
 
-const DELETE_TEMPLATE = gql`
+const DELETE_TEMPLATE_MUTATION = gql`
   mutation deleteCourseTemplate($id: ID!) {
     deleteCourseTemplate(id: $id) {
       id
@@ -126,10 +126,10 @@ export default compose(
       },
     }),
   }),
-  graphql(UPDATE_TEMPLATE, {
+  graphql(UPDATE_TEMPLATE_MUTATION, {
     name: 'updateCourseTemplate',
   }),
-  graphql(DELETE_TEMPLATE, {
+  graphql(DELETE_TEMPLATE_MUTATION, {
     name: 'deleteCourseTemplate',
   }),
   withRouter,

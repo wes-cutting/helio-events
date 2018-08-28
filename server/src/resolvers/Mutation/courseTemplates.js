@@ -39,7 +39,9 @@ const courseTemplates = {
                courseKind,
                campus,
                hours,
-               days
+               days: {
+                  set: days
+               }
             },
          },
          info,

@@ -3,8 +3,6 @@
 
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import CustomModal from "../shared/Modal";
-import TemplateSelect from "../courses/TemplateSelect";
 
 export default class Template extends Component {
   render() {

@@ -122,6 +122,11 @@ class CreateTemplate extends Component {
     this.setState({days: days})
     e.preventDefault()
     const { name, courseKind, campus, hours } = this.state;
+    console.log("name: ", name)
+    console.log("courseKind: ", courseKind)
+    console.log("campus: ", campus)
+    console.log("hours: ", hours)
+    console.log("days: ", days)
     await this.props.createTemplateMutation({
       variables: { name, courseKind, campus, hours, days },
     })
