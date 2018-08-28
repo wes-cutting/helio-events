@@ -46,7 +46,7 @@ class CourseEvent extends Component {
             className="w-100 pa2 mv2 br2 b--black-20 bw1"
             onChange={e => this.setState({ date: e.target.value })}
             placeholder="Date"
-            type="date"
+            type="datetime-local"
             value={this.state.date}
           />
           <textarea

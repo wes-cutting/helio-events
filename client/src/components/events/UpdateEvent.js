@@ -4,10 +4,10 @@
 
 // Still a work in progess
 
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import { graphql } from 'react-apollo'
-import { gql } from 'apollo-boost'
+import  { gql } from 'apollo-boost'
 
 class UpdateEvent extends Component {
   state = {
@@ -16,13 +16,9 @@ class UpdateEvent extends Component {
     desc: this.props.desc,
     eventKind: this.props.eventKind,
     date: this.props.date,
-    isUpdating: false,
-    buttonText: "Update"
   }
 
-//Need to pass props into state to populate fields to be changed
-
-  render () {
+  render() {
     return (
       <div className="pa4 flex justify-center bg-white">
         <form onSubmit={this.handlePost}>
@@ -30,14 +26,14 @@ class UpdateEvent extends Component {
           <input
             autoFocus
             className="w-100 pa2 mv2 br2 b--black-20 bw1"
-            onChange={e => this.setState({name: e.target.value})}
+            onChange={e => this.setState({ name: e.target.value })}
             placeholder="Name"
             type="text"
             value={this.state.name}
           />
           <select
             className="w-100 pa2 mv2 br2 b--black-20 bw1"
-            onChange={e => this.setState({eventKind: e.target.value})}
+            onChange={e => this.setState({ eventKind: e.target.value })}
             placeholder="Type"
             value={this.state.eventKind}
           >
@@ -52,15 +48,15 @@ class UpdateEvent extends Component {
           </select>
           <input
             className="w-100 pa2 mv2 br2 b--black-20 bw1"
-            onChange={e => this.setState({date: e.target.value})}
+            onChange={e => this.setState({ date: e.target.value })}
             placeholder="Date"
-            type="date"
+            type="datetime-local"
             value={this.state.date}
           />
           <textarea
             className="db w-100 ba bw1 b--black-20 pa2 br2 mb2"
             cols={50}
-            onChange={e => this.setState({desc: e.target.value})}
+            onChange={e => this.setState({ desc: e.target.value })}
             placeholder="Description"
             rows={8}
             value={this.state.desc}
@@ -69,7 +65,7 @@ class UpdateEvent extends Component {
             className={`pa3 bg-black-10 bn ${this.state.name &&
             this.state.eventKind && this.state.date && this.state.desc &&
             'dim pointer'}`}
-            disabled={!this.state.name || !this.state.eventKind || !this.state.date || !this.state.desc}
+            disabled={!this.state.name || !this.state.eventKind || !this.state.date || !this.state.desc }
             type="submit"
             value="Update"
           />
@@ -84,57 +80,16 @@ class UpdateEvent extends Component {
   handlePost = async e => {
     e.preventDefault()
     const { id, name, eventKind, date, desc } = this.state
-    await this.props.updateEvent({
-      variables: {  id: this.state.id,
-                    name: this.state.name,
-                    eventKind: this.state.eventKind,
-                    date: this.state.date,
-                    desc: this.state.desc
-      },
+    await this.props.updateEventMutation({
+      variables: { id, name, eventKind, date, desc },
     })
     this.props.history.replace('/events')
   }
-
-//   render () {
-//     let update = this.updateEvent()
-//       return (
-//         <div mutation={this.UpdateEventWithMutation}>
-// Hi
-//           {(updateEvent, {args}) => (
-//             <form onSubmit={ e => {
-//               e.preventDefault()
-//                 if(this.state.isUpdating) {
-//                   updateEvent({
-//                     variables: {
-//                       id: this.state.id,
-//                       name: this.state.name,
-//                       desc: this.state.desc,
-//                       eventKind: this.state.eventKind,
-//                       date: this.state.date
-//                     }
-//                   })
-//                   this.setState({ buttonText: "Update" })
-//                   window.location.reload(true)
-//                 } else {
-//                   this.setState({ buttonText: "Submit" })
-//             }
-//             this.setState({ isUpdating: !this.state.isUpdating })
-//             }}>
-//               { this.state.isUpdating ? update : null }
-//               <input type="submit">{this.state.buttonText}</input>
-//             </form>
-//           )}
-//         </div>
-//       )
-//   }
 }
 
 const UPDATE_EVENT_MUTATION = gql`
-  mutation updateEvent($id: ID!, $name: String!, $eventKind: EventKind!, $date: DateTime!, $desc: String) {
-    updateEvent (
-      where: {id: $id},
-      data: {name: $name, eventKind: $eventKind, date: $date, desc: $desc}
-    ) {
+  mutation UpdateEventMutation($id: ID!, $name: String!, $eventKind: EventKind!, $date: DateTime!, $desc: String!) {
+    updateEvent(id: $id, name: $name, eventKind: $eventKind, date: $date, desc: $desc) {
       id
       name
       eventKind
@@ -144,9 +99,8 @@ const UPDATE_EVENT_MUTATION = gql`
   }
 `
 
-
 const UpdateEventWithMutation = graphql(UPDATE_EVENT_MUTATION, {
-  name: 'updateEventMutation',
+  name: 'updateEventMutation', // name of the injected prop: this.props.createDraftMutation...
 })(UpdateEvent)
 
 export default withRouter(UpdateEventWithMutation)

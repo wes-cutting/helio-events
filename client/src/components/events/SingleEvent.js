@@ -2,9 +2,9 @@ import React, { Component, Fragment } from 'react'
 import { graphql, compose } from 'react-apollo'
 import { withRouter } from 'react-router-dom'
 import  { gql } from 'apollo-boost'
-import CustomModal from "../shared/Modal";
 
-// import UpdateEvent from './UpdateEvent'
+import CustomModal from "../shared/Modal";
+import UpdateEvent from './UpdateEvent'
 
 class SingleEvent extends Component {
   render() {
@@ -33,15 +33,12 @@ class SingleEvent extends Component {
 
   _renderAction = ({ id, name, eventKind, date, desc }) => {
     if (arguments) {
+      const updateEvent = <UpdateEvent id={ id } name={ name } eventKind={ eventKind } date={ date } desc={ desc } />
       return (
         <Fragment>
-          {/*<a*/}
-            {/*className="f6 dim br1 ba ph3 pv2 mb2 dib black pointer"*/}
-            {/*onClick={() => this.updateEvent(id, name, eventKind, date, desc)}*/}
-          {/*>*/}
-            {/*Update*/}
-          {/*</a>*/}
-          <CustomModal buttonText="Update Event"/>
+          <CustomModal buttonText="Update Event"
+                       component={updateEvent}
+          />
           {' '}
           <a
             className="f6 dim br1 ba ph3 pv2 mb2 dib black pointer"
@@ -63,18 +60,18 @@ class SingleEvent extends Component {
     )
   }
 
+  updateEvent = async ( id, name, eventKind, date, desc ) => {
+    await this.props.updateEvent({
+      variables: { id, name, eventKind, date, desc },
+    })
+    this.props.history.replace('/events')
+  }
+
   deleteEvent = async id => {
     await this.props.deleteEvent({
       variables: { id },
     })
     this.props.history.replace('/events')
-  }
-
-  updateEvent = async ( id, name, eventKind, date, desc ) => {
-    await this.props.updateEvent({
-      variables: { id, name, eventKind, date, desc },
-    })
-    this.props.history.replace('/updateEvent')
   }
 }
 
@@ -91,8 +88,8 @@ const EVENT_QUERY = gql`
 `
 
 const UPDATE_EVENT_MUTATION = gql`
-  mutation updateEvent($id: ID!, $name: String!, $eventKind: EventKind!, $date: DateTime!, $desc: String) {
-    updateEvent(id: $id, name: $name, eventKind: $eventKind, date: $date, desc: $desc) {
+  mutation UpdateEventMutation($name: String!, $eventKind: EventKind!, $date: DateTime!, $desc: String!) {
+    updateEvent(name: $name, eventKind: $eventKind, date: $date, desc: $desc) {
       id
       name
       eventKind
