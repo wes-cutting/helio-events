@@ -95,7 +95,7 @@ class RootContainer extends Component {
   render() {
     return (
       <Router>
-        <Fragment>
+        <Fragment className="navbar">
           {this.renderNavBar()}
           {this.renderRoute()}
         </Fragment>
@@ -106,8 +106,8 @@ class RootContainer extends Component {
   renderNavBar() {
     return (
       <nav className="pa3 pa4-ns">
-        <Link id="header" className="link dim black b f6 f5-ns dib mr3" to="/" title="Feed">
-          <h1 class="course">Welcome to the Helio Training Calendar</h1>
+        <Link className="link dim black b f6 f5-ns dib mr3" to="/" title="Feed">
+          <h1>Welcome to the Helio Training Calendar</h1>
         </Link><br/>
         {/*<NavLink*/}
         {/*className="link dim f6 f5-ns dib mr3 black"*/}
