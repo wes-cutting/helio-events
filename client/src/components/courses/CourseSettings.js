@@ -24,15 +24,15 @@ import CustomModal from '../shared/Modal'
 
    render() {
      return (
-       <div className="pa4 flex justify-center bg-white">
+       <div className="pa4 flex justify-center">
          <form onSubmit={this.handlePost}>
-           <h1>Update Course</h1>
+           <h1 className="CT">Update Course</h1>
            Template: {this.props.templateName}
            <br/>
            Course Name:
            <input
              autoFocus
-             className="w-100 pa2 mv2 br2 b--black-20 bw1"
+             className="db w-100 ba b--black-20 pa2 br2 mb2 bg-yellow"
              onChange={e => this.setState({ name: e.target.value })}
              placeholder="Name"
              type="text"
@@ -41,7 +41,7 @@ import CustomModal from '../shared/Modal'
            Start Date:
            <input
              type="datetime-local"
-             className="db w-100 ba bw1 b--black-20 pa2 br2 mb2"
+             className="db w-100 ba b--black-20 pa2 br2 mb2 bg-yellow"
              // cols={50}
              onChange={e => this.setState({ start: e.target.value })}
              placeholder="Start Date"
@@ -49,20 +49,20 @@ import CustomModal from '../shared/Modal'
              value={this.state.start}
            />
            <input
-             className={`pa3 bg-black-10 bn ${this.state.start &&
+             className={`pa3 bg-black-10 bn bg-yellow br2 ${this.state.start &&
              this.state.name &&
              'dim pointer'}`}
              disabled={!this.state.start || !this.state.name }
              type="submit"
              value="Update"
-           />
+           />&nbsp;
            <a className="f6 pointer" onClick={this.props.history.goBack}>
              or cancel
            </a>
-           <CustomModal
-             buttonText="Delete Course"
-             component={DELETE_COURSE}
-           />
+           {/*<CustomModal*/}
+             {/*buttonText="Delete Course"*/}
+             {/*component={DELETE_COURSE}*/}
+           {/*/>*/}
          </form>
        </div>
      )

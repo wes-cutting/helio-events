@@ -1,5 +1,10 @@
 @import 'https://fonts.googleapis.com/css?family=Open+Sans:300, 400';
 
+
+#header {
+  color: #ffd007;
+  text-shadow: 2px 2px black;
+}
 body {
   margin: 0;
   padding: 0;
@@ -12,7 +17,7 @@ body {
 }
 
 html {
-  box-sizing: border-box;
+  /*box-sizing: border-box;*/
 }
 
 *,

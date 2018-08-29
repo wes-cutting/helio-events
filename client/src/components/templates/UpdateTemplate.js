@@ -23,20 +23,21 @@ class UpdateTemplate extends Component {
   
   render() {
     return (
-      <div className="pa4 flex justify-center bg-white">
+      <div className="pa4 flex justify-center">
         <form onSubmit={ this.handlePost }>
           <h1 className="CT">Update a Template</h1>
           Name:
           <input
             autoFocus
-            className="db w-100 ba bw1 b--black-20 pa2 br2 mb2"
+            className="db w-100 ba b--black-20 pa2 br2 mb2 bg-yellow"
+            // style={inputStyles}
             onChange={ e => this.setState({ name: e.target.value }) }
             type="text"
             value={ this.state.name }
           />
           Course Kind:
           <select
-            className="db w-100 ba bw1 b--black-20 pa2 br2 mb2"
+            className="db w-100 ba b--black-20 pa2 br2 mb2 bg-yellow"
             onChange={ e => this.setState({ courseKind: e.target.value })}
             value={ this.state.courseKind }>
             <option value="PICKONE">Pick one...</option>
@@ -49,7 +50,7 @@ class UpdateTemplate extends Component {
           </select>
           Campus:
           <select
-            className="db w-100 ba bw1 b--black-20 pa2 br2 mb2"
+            className="db w-100 ba b--black-20 pa2 br2 mb2 bg-yellow"
             onChange={ e => this.setState({ campus: e.target.value}) }
             value={ this.state.campus }>
             <option value="PICKONE">Pick one...</option>
@@ -58,7 +59,7 @@ class UpdateTemplate extends Component {
           </select>
           Hours:
           <input
-            className="db w-50 ba bw1 b--black-20 pa2 br2 mb2"
+            className="db w-50 ba b--black-20 pa2 br2 mb2 bg-yellow"
             onChange={ e => this.setState({ hours: e.target.value }) }
             type="number"
             value={ this.state.hours }
@@ -91,7 +92,7 @@ class UpdateTemplate extends Component {
           <br/>
           <br/>
           <input
-            className={`pa3 bg-black-10 bn ${this.state.name &&
+            className={`pa3 bg-black-10 bn bg-yellow br2 ${this.state.name &&
             this.state.courseKind && this.state.campus && this.state.hours && this.state.days &&
             'dim pointer'}`}
             disabled={!this.state.name || !this.state.courseKind || !this.state.campus || !this.state.hours || !this.state.days}

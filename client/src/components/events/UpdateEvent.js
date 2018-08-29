@@ -20,19 +20,20 @@ class UpdateEvent extends Component {
 
   render() {
     return (
-      <div className="pa4 flex justify-center bg-white">
+      <div className="pa4 flex justify-center">
         <form onSubmit={this.handlePost}>
-          <h1>Update Event</h1>
+          <h1 className="CT">Update Event</h1>
+          Name:
           <input
             autoFocus
-            className="w-100 pa2 mv2 br2 b--black-20 bw1"
+            className="db w-100 ba b--black-20 pa2 br2 mb2 bg-yellow"
             onChange={e => this.setState({ name: e.target.value })}
             placeholder="Name"
             type="text"
             value={this.state.name}
-          />
+          />Event:
           <select
-            className="w-100 pa2 mv2 br2 b--black-20 bw1"
+            className="db w-100 ba b--black-20 pa2 br2 mb2 bg-yellow"
             onChange={e => this.setState({ eventKind: e.target.value })}
             placeholder="Type"
             value={this.state.eventKind}
@@ -46,29 +47,30 @@ class UpdateEvent extends Component {
             <option value="OPENHOUSE">OPENHOUSE</option>
             <option value="SHOWCASE">SHOWCASE</option>
           </select>
+          Date:
           <input
-            className="w-100 pa2 mv2 br2 b--black-20 bw1"
+            className="db w-100 ba b--black-20 pa2 br2 mb2 bg-yellow"
             onChange={e => this.setState({ date: e.target.value })}
             placeholder="Date"
             type="datetime-local"
             value={this.state.date}
-          />
+          />Description:
           <textarea
-            className="db w-100 ba bw1 b--black-20 pa2 br2 mb2"
+            className="db w-100 ba b--black-20 pa2 br2 mb2 bg-yellow"
             cols={50}
             onChange={e => this.setState({ desc: e.target.value })}
             placeholder="Description"
-            rows={8}
+            rows={4}
             value={this.state.desc}
           />
           <input
-            className={`pa3 bg-black-10 bn ${this.state.name &&
+            className={`pa3 bg-black-10 bn bg-yellow br2 ${this.state.name &&
             this.state.eventKind && this.state.date && this.state.desc &&
             'dim pointer'}`}
             disabled={!this.state.name || !this.state.eventKind || !this.state.date || !this.state.desc }
             type="submit"
             value="Update"
-          />
+          />&nbsp;
           <a className="f6 pointer" onClick={this.props.history.goBack}>
             or cancel
           </a>

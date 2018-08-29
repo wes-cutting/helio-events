@@ -39,6 +39,7 @@ class TemplateDetail extends Component {
     if (arguments) {
       const updateTemplate = <UpdateTemplate id= { id } name={ name } courseKind={courseKind} campus={campus} hours={hours} days={days}/>
       const createCourse = <TemplateSelect templateId={id} templateName={name}/>
+      // const deleteTemplate = <DeleteTemplate id= { id } />
       return (
         <Fragment>
           <CustomModal

@@ -5,17 +5,43 @@
 import React from 'react';
 import Modal from 'react-modal';
 
-const customStyles = {
-  content : {
-    top                   : '50%',
-    left                  : '50%',
-    right                 : 'auto',
-    bottom                : 'auto',
-    marginRight           : '-50%',
-    transform             : 'translate(-50%, -50%)'
+// const customStyles = {
+//   content : {
+//     top: '50%',
+//     left: '50%',
+//     right: 'auto',
+//     bottom: 'auto',
+//     marginRight: '-50%',
+//     transform: 'translate(-50%, -50%)',
+//     background: '#1d1d1d',
+//     color: '#ffd007',
+//   }
+// };
+Modal.defaultStyles= {
+  overlay: {
+    position: "fixed",
+    top: 0,
+    left: 300,
+    right: 300,
+    bottom: 0,
+    // backgroundColor: "#1d1d1d"
+  },
+  content: {
+    position: "absolute",
+    top: "40px",
+    left: "40px",
+    right: "40px",
+    bottom: "40px",
+    // border: "1px solid #ccc",
+    background: "#1d1d1d",
+    overflow: "auto",
+    WebkitOverflowScrolling: "touch",
+    borderRadius: "8px",
+    // outline: "none",
+    // padding: "20px",
+    color: "#ffd007"
   }
-};
-
+}
 // Make sure to bind modal to your appElement (http://reactcommunity.org/react-modal/accessibility/)
 // Modal.setAppElement('#yourAppElement')
 
@@ -47,7 +73,7 @@ class CustomModal extends React.Component {
         <Modal
           isOpen={this.state.modalIsOpen}
           onRequestClose={this.closeModal}
-          style={customStyles}
+          // style={customStyles}
           contentLabel="Example Modal"
         >
           {this.props.component}
