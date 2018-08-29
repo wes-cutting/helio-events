@@ -15,6 +15,7 @@ import { gql } from 'apollo-boost'
 
 import CustomModal from '../shared/Modal'
 import CourseSettings from "./CourseSettings";
+import CourseEvent from '../events/CourseEvent'
 
 class CourseDetails extends Component {
   render() {
@@ -36,17 +37,30 @@ class CourseDetails extends Component {
         <h2 className="f3 black-80 fw4 lh-solid">{course.name}</h2>
         <p className="black-80 fw3">{course.template.name}</p>
         <p className="black-80 fw3">{course.start}</p>
+        <p className="black-80 fw3">{course.isFinished ? "Course is Complete" : "Course has yet to finish"}</p>
         <ul className="black-80 fw3">{course.events.map(event => (<li>{event.name}</li>))}</ul>
         {action}
       </Fragment>
     )
   }
 
-  _renderAction = ({ id, template, name, start, event }) => {
+  _renderAction = ({ id, template, name, start, events, isFinished }) => {
     if (arguments) {
-      const courseSettings = <CourseSettings name={ name } template={template} />
+      const courseSettings = <CourseSettings
+        id={ id }
+        name={ name }
+        template={ template }
+        start={ start }
+        events={ events }
+        isFinished={ isFinished }
+      />
+      const addEvent = <CourseEvent id={id}/>
       return (
         <Fragment>
+          {/*<CustomModal*/}
+            {/*buttonText="Add Course Event"*/}
+            {/*component={addEvent}*/}
+          {/*/>*/}
           <CustomModal
             buttonText="Update Course"
             component={courseSettings}
@@ -58,10 +72,10 @@ class CourseDetails extends Component {
             {/*Update*/}
           {/*</a>*/}
           {' '}
-          <CustomModal
-            buttonText="Delete Course"
-            component={courseSettings}
-          />
+          {/*<CustomModal*/}
+            {/*buttonText="Delete Course"*/}
+            {/*component={courseSettings}*/}
+          {/*/>*/}
           <a
             className="f6 dim br1 ba ph3 pv2 mb2 dib black pointer"
             onClick={() => this.deleteCourse(id)}
@@ -88,12 +102,12 @@ class CourseDetails extends Component {
     this.props.history.replace('/')
   }
 
-  updateCourse = async ( id, template, name, start, event ) => {
-    await this.props.updateCourse({
-      variables: { id, template, name, start, event },
-    })
-    this.props.history.replace('/')
-  }
+  // updateCourse = async ( id, template, name, start, event ) => {
+  //   await this.props.updateCourse({
+  //     variables: { id, template, name, start, event },
+  //   })
+  //   this.props.history.replace('/')
+  // }
 }
 
 const COURSE_QUERY =gql`
@@ -114,24 +128,24 @@ const COURSE_QUERY =gql`
     }
   }
 `
-const UPDATE_COURSE = gql`
-  mutation updateCourse($id: ID!) {
-    updateCourse(id: $id, template: $template, name: $name, start: $start, event: $event) {
-      id
-      template {
-        id
-        name
-      }
-      name
-      start
-      events{
-        id
-        name
-      }
-      isFinished
-    }
-  }
-`
+// const UPDATE_COURSE = gql`
+//   mutation updateCourse($id: ID!) {
+//     updateCourse(id: $id, template: $template, name: $name, start: $start, event: $event) {
+//       id
+//       template {
+//         id
+//         name
+//       }
+//       name
+//       start
+//       events{
+//         id
+//         name
+//       }
+//       isFinished
+//     }
+//   }
+// `
 
 
 const DELETE_COURSE = gql`
@@ -151,9 +165,9 @@ export default compose(
       },
     }),
   }),
-  graphql(UPDATE_COURSE, {
-    name: 'updateCourse',
-  }),
+  // graphql(UPDATE_COURSE, {
+  //   name: 'updateCourse',
+  // }),
   graphql(DELETE_COURSE, {
     name: 'deleteCourse',
   }),

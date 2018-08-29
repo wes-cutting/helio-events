@@ -21,7 +21,6 @@ import { graphql } from 'react-apollo'
 import  { gql } from 'apollo-boost'
 
 import GlobalEvent from './events/GlobalEvent'
-import CourseEvent from './events/CourseEvent'
 import EventList from './events/EventList'
 import SingleEvent from './events/SingleEvent'
 // import UpdateEvent from "./events/UpdateEvent";
@@ -198,14 +197,14 @@ class RootContainer extends Component {
             className="f6 link dim br1 ba ph3 pv2 fr mb2 dib black">+ Create Global Event</Link>
         )}
         
-        {this.props.data &&
-        // this.props.data.me &&
-        // this.props.data.me.email &&
-        this.state.token && (
-          <Link
-            to="/courseEvent"
-            className="f6 link dim br1 ba ph3 pv2 fr mb2 dib black">+ Create Course Event</Link>
-        )}
+        {/*{this.props.data &&*/}
+        {/*// this.props.data.me &&*/}
+        {/*// this.props.data.me.email &&*/}
+        {/*this.state.token && (*/}
+          {/*<Link*/}
+            {/*to="/courseEvent"*/}
+            {/*className="f6 link dim br1 ba ph3 pv2 fr mb2 dib black">+ Create Course Event</Link>*/}
+        {/*)}*/}
         
         {this.props.data &&
         // this.props.data.me &&
@@ -237,11 +236,11 @@ class RootContainer extends Component {
             path="/globalEvent"
             component={GlobalEvent}
           />
-          <ProtectedRoute
-            token={this.state.token}
-            path="/courseEvent"
-            component={CourseEvent}
-          />
+          {/*<ProtectedRoute*/}
+            {/*token={this.state.token}*/}
+            {/*path="/courseEvent"*/}
+            {/*component={CourseEvent}*/}
+          {/*/>*/}
           <ProtectedRoute
             token={this.state.token}
             path="/updateEvent"

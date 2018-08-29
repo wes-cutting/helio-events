@@ -11,15 +11,13 @@ import { graphql } from 'react-apollo'
 import { withRouter } from 'react-router-dom'
 import  { gql } from 'apollo-boost'
 
-import CustomModal from '../shared/Modal'
-
  class CourseSettings extends Component {
   state = {
     id: this.props.id,
     template: this.props.template,
     name: this.props.name,
-    start: this.props.start,
-    event: this.props.event,
+    start: this.props.start.split('.')[0],
+    isFinished: this.props.isFinished
   }
 
    render() {
@@ -27,21 +25,20 @@ import CustomModal from '../shared/Modal'
        <div className="pa4 flex justify-center bg-white">
          <form onSubmit={this.handlePost}>
            <h1>Update Course</h1>
-           Template: {this.props.templateName}
+           Template: {this.state.template.name}
            <br/>
-           Course Name:
-           <input
+           <br/>
+           Course Name:<input
              autoFocus
-             className="w-100 pa2 mv2 br2 b--black-20 bw1"
+             className="w-100 pa2 mt2 mb3 br2 b--black-20 bw1"
              onChange={e => this.setState({ name: e.target.value })}
              placeholder="Name"
              type="text"
              value={this.state.name}
            />
-           Start Date:
-           <input
+           Start Date:<input
              type="datetime-local"
-             className="db w-100 ba bw1 b--black-20 pa2 br2 mb2"
+             className="db w-100 ba bw1 b--black-20 pa2 br2 mt2 mb3"
              // cols={50}
              onChange={e => this.setState({ start: e.target.value })}
              placeholder="Start Date"
@@ -49,20 +46,22 @@ import CustomModal from '../shared/Modal'
              value={this.state.start}
            />
            <input
-             className={`pa3 bg-black-10 bn ${this.state.start &&
-             this.state.name &&
-             'dim pointer'}`}
-             disabled={!this.state.start || !this.state.name }
-             type="submit"
-             value="Update"
-           />
+             type="checkbox"
+             onChange={e => this.setState({ isFinished: e.target.value })}
+           /> Is Finished
+           <br/>
+           <br/>
+           {/*<input*/}
+             {/*className={`pa3 bg-black-10 bn ${this.state.start &&*/}
+             {/*this.state.name &&*/}
+             {/*'dim pointer'}`}*/}
+             {/*disabled={!this.state.start || !this.state.name }*/}
+             {/*type="submit"*/}
+             {/*value="Update"*/}
+           {/*/>*/}
            <a className="f6 pointer" onClick={this.props.history.goBack}>
-             or cancel
+             or cancel update
            </a>
-           <CustomModal
-             buttonText="Delete Course"
-             component={DELETE_COURSE}
-           />
          </form>
        </div>
      )
@@ -70,6 +69,7 @@ import CustomModal from '../shared/Modal'
 
    handlePost = async e => {
      e.preventDefault()
+     console.log("balls")
      const { name, start } = this.state
      const { templateID } = this.state
      await this.props.updateCourseMutation({
@@ -92,13 +92,13 @@ const UPDATE_COURSE_MUTATION = gql`
   }
 `
 
-const DELETE_COURSE = gql`
-  mutation deleteCourse($id: ID!) {
-    deleteCourse(id: $id) {
-      id
-    }
-  }
-`
+// const DELETE_COURSE = gql`
+//   mutation deleteCourse($id: ID!) {
+//     deleteCourse(id: $id) {
+//       id
+//     }
+//   }
+// `
 
 const UpdateCourseWithMutation = graphql(UPDATE_COURSE_MUTATION, {
   name: 'updateCourseMutation',
