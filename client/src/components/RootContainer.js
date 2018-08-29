@@ -94,7 +94,7 @@ class RootContainer extends Component {
   render() {
     return (
       <Router>
-        <Fragment className="navbar">
+        <Fragment>
           {this.renderNavBar()}
           {this.renderRoute()}
         </Fragment>

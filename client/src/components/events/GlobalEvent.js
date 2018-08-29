@@ -36,6 +36,7 @@ class GlobalEvent extends Component {
             placeholder="Type"
             value={this.state.eventKind}
           >
+            <option value="PICKONE">Pick one...</option>
             <option value="HOLIDAY">HOLIDAY</option>
             <option value="MEETUP">MEETUP</option>
             <option value="OPENHOUSE">OPENHOUSE</option>
