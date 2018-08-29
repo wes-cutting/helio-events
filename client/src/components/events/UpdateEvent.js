@@ -15,7 +15,7 @@ class UpdateEvent extends Component {
     name: this.props.name,
     desc: this.props.desc,
     eventKind: this.props.eventKind,
-    date: this.props.date,
+    date: this.props.date.split(".")[0],
   }
 
   render() {
