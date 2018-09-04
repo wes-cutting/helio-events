@@ -49,27 +49,27 @@ class RootContainer extends Component {
   constructor(props) {
     super(props)
     this.refreshTokenFn = this.refreshTokenFn.bind(this)
-    
+
     this.state = {
       token: props.token,
     }
   }
-  
+
   // dont touch below here
   refreshTokenFn(data = {}) {
     const token = data.AUTH_TOKEN
-    
+
     if (token) {
       localStorage.setItem(AUTH_TOKEN, token)
     } else {
       localStorage.removeItem(AUTH_TOKEN)
     }
-    
+
     this.setState({
       token: data.AUTH_TOKEN,
     })
   }
-  
+
   bootStrapData() {
     try {
       const token = localStorage.getItem(AUTH_TOKEN)
@@ -91,23 +91,23 @@ class RootContainer extends Component {
   componentDidMount() {
     this.bootStrapData()
   }
-  
+
   render() {
     return (
       <Router>
-        <Fragment className="navbar">
+        <Fragment>
           {this.renderNavBar()}
           {this.renderRoute()}
         </Fragment>
       </Router>
     )
   }
-  
+
   renderNavBar() {
     return (
       <nav className="pa3 pa4-ns">
         <Link className="link dim black b f6 f5-ns dib mr3" to="/" title="Feed">
-          <h1>Welcome to the Helio Training Calendar</h1>
+          <h1 class="course">Welcome to the Helio Training Calendar</h1>
         </Link><br/>
         {/*<NavLink*/}
         {/*className="link dim f6 f5-ns dib mr3 black"*/}
@@ -115,7 +115,7 @@ class RootContainer extends Component {
         {/*exact={true}*/}
         {/*to="/"*/}
         {/*title="Feed">Feed</NavLink>*/}
-        
+
         {/*{this.props.data &&*/}
         {/*// this.props.data.me &&*/}
         {/*// this.props.data.me.email &&*/}
@@ -127,7 +127,7 @@ class RootContainer extends Component {
         {/*to="/drafts"*/}
         {/*title="Drafts">Drafts</NavLink>*/}
         {/*)}*/}
-        
+
         {this.props.data &&
         // this.props.data.me &&
         // this.props.data.me.email &&
@@ -142,7 +142,7 @@ class RootContainer extends Component {
             Courses
           </NavLink>
         )}
-        
+
         {this.props.data &&
         // this.props.data.me &&
         // this.props.data.me.email &&
@@ -157,7 +157,7 @@ class RootContainer extends Component {
             Events
           </NavLink>
         )}
-        
+
         {this.props.data &&
         // this.props.data.me &&
         // this.props.data.me.email &&
@@ -172,7 +172,7 @@ class RootContainer extends Component {
             Templates
           </NavLink>
         )}
-        
+
         {this.state.token ? (
           <div
             onClick={() => {
@@ -188,7 +188,7 @@ class RootContainer extends Component {
             to="/login"
             className="f6 link dim br1 ba ph3 pv2 fr mb2 dib black">Login</Link>
         )}
-        
+
         {this.props.data &&
         // this.props.data.me &&
         // this.props.data.me.email &&
@@ -197,7 +197,7 @@ class RootContainer extends Component {
             to="/globalEvent"
             className="f6 link dim br1 ba ph3 pv2 fr mb2 dib black">+ Create Global Event</Link>
         )}
-        
+
         {this.props.data &&
         // this.props.data.me &&
         // this.props.data.me.email &&
@@ -206,7 +206,7 @@ class RootContainer extends Component {
             to="/courseEvent"
             className="f6 link dim br1 ba ph3 pv2 fr mb2 dib black">+ Create Course Event</Link>
         )}
-        
+
         {this.props.data &&
         // this.props.data.me &&
         // this.props.data.me.email &&
@@ -226,7 +226,7 @@ class RootContainer extends Component {
       </nav>
     )
   }
-  
+
   renderRoute() {
     return (
       <div className="fl w-100 pl4 pr4">

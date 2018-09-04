@@ -5,6 +5,8 @@ import React, { Component, Fragment } from 'react'
 import LimitedCourse from './LimitedCourse'
 import { graphql } from 'react-apollo'
 import { gql } from 'apollo-boost'
+import courses from './courses.css'
+
 
 class Courses extends Component {
   componentWillReceiveProps(nextProps) {
@@ -22,6 +24,7 @@ class Courses extends Component {
       return (
         <div className="flex w-100 h-100 items-center justify-center pt7">
           <div>Loading (from {process.env.REACT_APP_GRAPHQL_ENDPOINT})</div>
+
         </div>
       )
     }
@@ -29,7 +32,7 @@ class Courses extends Component {
     return (
       <Fragment>
         <div className="flex justify-between items-center">
-          <h1>Courses</h1>
+          <h1 class="course">Courses</h1>
         </div>
         {this.props.coursesQuery.courses &&
         this.props.coursesQuery.courses.map(course => (

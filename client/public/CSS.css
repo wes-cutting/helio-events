@@ -1,0 +1,22 @@
+.parallax {
+  background-image: url("https://i.vimeocdn.com/video/633694520_780x439.jpg");
+  min-height: 67em;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover
+}
+.faded {
+  position: relative;
+  margin: 0 auto
+}
+/*.container img {vertical-align: middle;}*/
+.faded .plus {
+  /*position: absolute;*/
+  top: 0;
+  background: rgba(0,0,0,0.5);
+  color: #f1f1f1;
+  width: 1140px;
+  padding: 20px
+}
+
