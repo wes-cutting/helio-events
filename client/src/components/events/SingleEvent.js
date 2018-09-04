@@ -5,6 +5,8 @@ import  { gql } from 'apollo-boost'
 
 import CustomModal from "../shared/Modal";
 import UpdateEvent from './UpdateEvent'
+import DeleteModal from "../shared/Delete";
+import DeleteEvent from "./DeleteEvent";
 
 class SingleEvent extends Component {
   render() {
@@ -25,7 +27,7 @@ class SingleEvent extends Component {
         <h1>Event Details</h1>
         <h2 className="f3 black-80 fw4 lh-solid">{event.name}</h2>
         <p className="black-80 fw3">{event.eventKind}</p>
-        <p className="black-80 fw3">{event.date}</p>
+        <p className="black-80 fw3">{event.date.split(".")[0]}</p>
         <p className="black-80 fw3">{event.desc}</p>
         {action}
       </Fragment>
@@ -35,30 +37,34 @@ class SingleEvent extends Component {
   _renderAction = ({ id, name, eventKind, date, desc }) => {
     if (arguments) {
       const updateEvent = <UpdateEvent id={ id } name={ name } eventKind={ eventKind } date={ date } desc={ desc } />
+      const deleteEvent = <DeleteEvent id={ id } />
       return (
         <Fragment>
           <CustomModal buttonText="Update Event"
                        component={updateEvent}
           />
           {' '}
-          <a
-            className="f6 dim br1 ba ph3 pv2 mb2 dib black pointer"
-            onClick={() => this.deleteEvent(id)}
-          >
-            Delete
-          </a>
+          <DeleteModal buttonText="Delete Event"
+                       component={deleteEvent}
+          />
+          {/*<a*/}
+            {/*className="f6 dim br1 ba ph3 pv2 mb2 dib black pointer"*/}
+            {/*onClick={() => this.deleteEvent(id)}*/}
+          {/*>*/}
+            {/*Delete*/}
+          {/*</a>*/}
         </Fragment>
       )
     }
 
-    return (
-      <a
-        className="f6 dim br1 ba ph3 pv2 mb2 dib black pointer"
-        onClick={() => this.deleteEvent(id)}
-      >
-        Delete
-      </a>
-    )
+    // return (
+    //   <a
+    //     className="f6 dim br1 ba ph3 pv2 mb2 dib black pointer"
+    //     onClick={() => this.deleteEvent(id)}
+    //   >
+    //     Delete
+    //   </a>
+    // )
   }
 
   updateEvent = async ( id, name, eventKind, date, desc ) => {

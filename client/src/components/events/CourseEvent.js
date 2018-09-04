@@ -37,6 +37,7 @@ class CourseEvent extends Component {
             placeholder="Type"
             value={this.state.eventKind}
           >
+            <option value="PICKONE">Pick one...</option>
             <option value="GRADUATION">GRADUATION</option>
             <option value="ORIENTATION">ORIENTATION</option>
             <option value="VACATION">VACATION</option>
